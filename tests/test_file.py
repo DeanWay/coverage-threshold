@@ -47,7 +47,7 @@ test_report = JsonReportModel(
 def test_all_files_at_or_above_threshold() -> None:
     assert each_file_line_coverage_metric(test_report, Decimal("50.0")) == Pass()
     assert each_file_line_coverage_metric(test_report, Decimal("75.0")) == Fail(
-        ['File: "src/main.py" failed line coverage metric, expected: 75.0, was 50.00']
+        ['File: "src/main.py" failed line coverage metric, expected: 75.0, was 50.0000']
     )
 
 
