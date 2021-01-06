@@ -1,11 +1,35 @@
-from coverage_threshold.model.coverage_json import CoverageSummaryModel
 from decimal import Decimal
 
+from coverage_threshold.model.coverage_json import CoverageSummaryModel
 
-def percent_lines_covered(summary: CoverageSummaryModel) -> Decimal:
-    if summary.num_statements == 0:
+
+def _safe_percent(numerator: int, denomenator: int) -> Decimal:
+    if denomenator == 0:
         return Decimal(0)
     else:
         return (
-            Decimal(summary.covered_lines) / Decimal(summary.num_statements)
-        ) * Decimal("100.0")
+            (Decimal(numerator) / Decimal(denomenator)) * Decimal("100.0")
+        ).quantize(Decimal("0.0001"))
+
+
+def percent_lines_covered(summary: CoverageSummaryModel) -> Decimal:
+    return _safe_percent(summary.covered_lines, summary.num_statements)
+
+
+def percent_branches_covered(summary: CoverageSummaryModel) -> Decimal:
+    if summary.covered_branches is not None and summary.num_branches is not None:
+        return _safe_percent(summary.covered_branches, summary.num_branches)
+    else:
+        raise ValueError("missing number of branches or number of branches covered")
+
+
+def percent_combined_lines_and_branches_covered(
+    summary: CoverageSummaryModel,
+) -> Decimal:
+    if summary.covered_branches is not None and summary.num_branches is not None:
+        return _safe_percent(
+            summary.covered_lines + summary.covered_branches,
+            summary.num_statements + summary.num_branches,
+        )
+    else:
+        raise ValueError("missing number of branches or number of branches covered")

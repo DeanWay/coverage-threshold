@@ -7,9 +7,10 @@ from coverage_threshold.model.coverage_json import (
     JsonReportMetadata,
 )
 from coverage_threshold.lib import (
-    all_files_at_or_above_threshold,
-    average_line_coverage_at_or_above_threshold,
+    each_file_line_coverage_metric,
+    total_line_coverage_metric,
 )
+from coverage_threshold.lib.check_result import Pass, Fail
 
 test_report = JsonReportModel(
     meta=JsonReportMetadata(branch_coverage=False),
@@ -44,9 +45,11 @@ test_report = JsonReportModel(
 
 
 def test_all_files_at_or_above_threshold() -> None:
-    assert all_files_at_or_above_threshold(test_report, Decimal("50.0"))
-    assert all_files_at_or_above_threshold(test_report, Decimal("75.0")) is False
+    assert each_file_line_coverage_metric(test_report, Decimal("50.0")) == Pass()
+    assert each_file_line_coverage_metric(test_report, Decimal("75.0")) == Fail(
+        ['File: "src/main.py" failed line coverage metric, expected: 75.0, was 50.00']
+    )
 
 
 def test_average_line_coverage_at_or_above_threshold() -> None:
-    assert average_line_coverage_at_or_above_threshold(test_report, Decimal("75.0"))
+    assert total_line_coverage_metric(test_report, Decimal("75.0"))

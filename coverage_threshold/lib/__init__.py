@@ -1,2 +1,2 @@
-from ._file import all_files_at_or_above_threshold
-from ._totals import average_line_coverage_at_or_above_threshold
+from ._file import each_file_line_coverage_metric
+from ._totals import total_line_coverage_metric
