@@ -3,9 +3,9 @@ from typing import Tuple, Iterator, Optional
 
 from coverage_threshold.model.config import Config, ModuleConfig
 from coverage_threshold.model.coverage_json import JsonReportModel, FileCoverageModel
+from coverage_threshold.lib.functools import prefix_match_length
 from .check_result import CheckResult, Fail, Pass, fold_check_results
 from ._common import percent_lines_covered
-
 
 def best_matching_module_config_for_file(
     filename: str, config: Config
@@ -56,18 +56,3 @@ def each_file_line_coverage_metric(
     )
 
 
-def take_while(f, iterable):
-    for x in iterable:
-        if f(x):
-            yield x
-        else:
-            break
-
-
-def prefix_match_length(prefix: str, string: str) -> int:
-    if not string.startswith(prefix):
-        return 0
-    else:
-        return len(
-            list(take_while(lambda pair: pair[0] == pair[1], zip(prefix, string)))
-        )
