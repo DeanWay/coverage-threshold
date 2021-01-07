@@ -80,7 +80,7 @@ def main() -> int:
     if all_checks.result:
         print(colors.OKGREEN + "Success!" + colors.ENDC)
     else:
-        print("Fail!")
+        print(f"Failed with {len(all_checks.problems)} errors")
         for problem in all_checks.problems:
             print(colors.FAIL + problem + colors.ENDC)
     return bool_to_return_status(all_checks.result)
