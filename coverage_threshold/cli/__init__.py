@@ -8,6 +8,7 @@ from coverage_threshold.model.config import Config
 from coverage_threshold.model.coverage_json import JsonReportModel
 from coverage_threshold.lib import check_all
 from coverage_threshold.lib.check_result import fold_check_results
+from coverage_threshold.cli import colors
 
 
 parser = argparse.ArgumentParser(description="")
@@ -63,19 +64,6 @@ def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
         modules=config.modules,
     )
 
-
-class bcolors:
-    HEADER = "\033[95m"
-    OKBLUE = "\033[94m"
-    OKCYAN = "\033[96m"
-    OKGREEN = "\033[92m"
-    WARNING = "\033[93m"
-    FAIL = "\033[91m"
-    ENDC = "\033[0m"
-    BOLD = "\033[1m"
-    UNDERLINE = "\033[4m"
-
-
 def main() -> int:
     args = parser.parse_args(namespace=ArgsNamespace())
     report = read_report(args.coverage_json)
@@ -83,9 +71,9 @@ def main() -> int:
     config = combine_config_with_args(args, config_from_file)
     all_checks = check_all(report, config)
     if all_checks.result:
-        print(bcolors.OKGREEN + "Success!" + bcolors.ENDC)
+        print(colors.OKGREEN + "Success!" + colors.ENDC)
     else:
         print("Fail!")
         for problem in all_checks.problems:
-            print(bcolors.FAIL + problem + bcolors.ENDC)
+            print(colors.FAIL + problem + colors.ENDC)
     return bool_to_return_status(all_checks.result)
