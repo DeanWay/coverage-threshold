@@ -1,5 +1,6 @@
 import argparse
 import json
+import os.path
 from decimal import Decimal
 from typing import NamedTuple, Optional
 
@@ -45,7 +46,7 @@ parser.add_argument(
 parser.add_argument(
     "--config",
     type=str,
-    default="./pyproject.toml",
+    default=None,
     help="path to config file (default: ./pyproject.toml)",
 )
 
@@ -68,8 +69,17 @@ def read_report(coverage_json_filename: str) -> ReportModel:
         return ReportModel.parse(json.loads(coverage_json_file.read()))
 
 
-def read_config(config_file_name: str) -> Config:
-    return Config.parse(toml.load(config_file_name).get("coverage-threshold", {}))
+def read_config(config_file_name: Optional[str]) -> Config:
+    DEFAULT_FILENAME = "./pyproject.toml"
+    if config_file_name is not None:
+        return Config.parse(toml.load(config_file_name)["coverage-threshold"])
+    else:
+        if os.path.isfile(DEFAULT_FILENAME):
+            return Config.parse(
+                toml.load(DEFAULT_FILENAME).get("coverage-threshold", {})
+            )
+        else:
+            return Config()
 
 
 def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
