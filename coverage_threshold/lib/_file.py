@@ -3,7 +3,6 @@ from typing import Tuple, Iterator, Optional
 
 from coverage_threshold.model.config import Config, ModuleConfig
 from coverage_threshold.model.report import ReportModel, FileCoverageModel
-from coverage_threshold.lib.functools import prefix_match_length
 from .check_result import CheckResult, Fail, Pass, fold_check_results
 from ._common import percent_lines_covered
 
@@ -16,13 +15,13 @@ def best_matching_module_config_for_file(
     # need to optomize this for most cases
     if config.modules is None:
         return None
-    match_length_per_module_config: Iterator[Tuple[int, ModuleConfig]] = (
-        (prefix_match_length(prefix, filename), module)
+    matches = [
+        (prefix, module)
         for prefix, module in config.modules.items()
-    )
-    matches = list(filter(lambda match: match[0] > 0, match_length_per_module_config))
+        if filename.startswith(prefix)
+    ]
     if len(matches) > 0:
-        return max(matches, key=lambda match: match[0])[1]
+        return max(matches, key=lambda match: len(match[0]))[1]
     else:
         return None
 
