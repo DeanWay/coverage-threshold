@@ -1,10 +1,11 @@
 from decimal import Decimal
-from typing import Tuple, Iterator, Optional
+from typing import Iterator, Optional, Tuple
 
 from coverage_threshold.model.config import Config, ModuleConfig
-from coverage_threshold.model.report import ReportModel, FileCoverageModel
-from .check_result import CheckResult, Fail, Pass, fold_check_results
+from coverage_threshold.model.report import FileCoverageModel, ReportModel
+
 from ._common import percent_lines_covered
+from .check_result import CheckResult, Fail, Pass, fold_check_results
 
 
 def best_matching_module_config_for_file(

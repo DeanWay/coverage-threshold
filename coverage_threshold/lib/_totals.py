@@ -1,7 +1,9 @@
-from coverage_threshold.model.report import ReportModel
 from decimal import Decimal
-from .check_result import CheckResult, Fail, Pass, fold_check_results
+
+from coverage_threshold.model.report import ReportModel
+
 from ._common import percent_lines_covered
+from .check_result import CheckResult, Fail, Pass, fold_check_results
 
 
 def total_line_coverage_metric(report: ReportModel, threshold: Decimal) -> CheckResult:

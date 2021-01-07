@@ -3,9 +3,9 @@ from decimal import Decimal
 from coverage_threshold.model.config import Config
 from coverage_threshold.model.report import ReportModel
 
-from .check_result import CheckResult, fold_check_results
 from ._file import each_file_line_coverage_metric
 from ._totals import total_line_coverage_metric
+from .check_result import CheckResult, fold_check_results
 
 
 def check_all(report: ReportModel, config: Config) -> CheckResult:

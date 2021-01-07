@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from functools import reduce
-from typing import Iterable, List, Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterable, List, Union
+
 if TYPE_CHECKING:
     from typing_extensions import Literal
 

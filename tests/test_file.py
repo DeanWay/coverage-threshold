@@ -1,17 +1,17 @@
 from decimal import Decimal
 
-from coverage_threshold.model.config import Config
-from coverage_threshold.model.report import (
-    ReportModel,
-    FileCoverageModel,
-    CoverageSummaryModel,
-    ReportMetadata,
-)
 from coverage_threshold.lib import (
     each_file_line_coverage_metric,
     total_line_coverage_metric,
 )
-from coverage_threshold.lib.check_result import Pass, Fail
+from coverage_threshold.lib.check_result import Fail, Pass
+from coverage_threshold.model.config import Config
+from coverage_threshold.model.report import (
+    CoverageSummaryModel,
+    FileCoverageModel,
+    ReportMetadata,
+    ReportModel,
+)
 
 test_report = ReportModel(
     meta=ReportMetadata(branch_coverage=False),
