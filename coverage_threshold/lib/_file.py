@@ -5,7 +5,7 @@ from typing import Iterable, Iterator, List, Optional, Tuple
 from coverage_threshold.model.config import Config, ModuleConfig
 from coverage_threshold.model.report import FileCoverageModel, ReportModel
 
-from ._common import percent_lines_covered
+from ._common import percent_branches_covered, percent_lines_covered
 from .check_result import CheckResult, Fail, Pass, fold_check_results
 
 
@@ -51,6 +51,33 @@ def check_file_line_coverage_min(
         )
 
 
+def check_file_branch_coverage_min(
+    filename: str,
+    file_coverage: FileCoverageModel,
+    report: ReportModel,
+    config: Config,
+    module_config: Optional[ModuleConfig],
+) -> CheckResult:
+    if module_config is None or module_config.file_branch_coverage_min is None:
+        return Pass()
+    else:
+        if not report.meta.branch_coverage:
+            raise ValueError(
+                "trying to check branch coverage without providing"
+                + " a report with branch coverage data"
+            )
+        percent_total_branches_covered = percent_branches_covered(file_coverage.summary)
+        if percent_total_branches_covered >= module_config.file_branch_coverage_min:
+            return Pass()
+        else:
+            return Fail(
+                [
+                    f"File: {filename} failed branch coverage metric,"
+                    + f" expected: {module_config.file_branch_coverage_min}, was {percent_total_branches_covered}"
+                ]
+            )
+
+
 def check_all_files(report: ReportModel, config: Config) -> CheckResult:
     files_with_module_config = (
         (
@@ -65,6 +92,13 @@ def check_all_files(report: ReportModel, config: Config) -> CheckResult:
             check_file_line_coverage_min(
                 filename=filename,
                 file_coverage=file_coverage,
+                config=config,
+                module_config=module_config,
+            ),
+            check_file_branch_coverage_min(
+                filename=filename,
+                file_coverage=file_coverage,
+                report=report,
                 config=config,
                 module_config=module_config,
             ),

@@ -31,11 +31,15 @@ class Config:
 @dataclass(frozen=True)
 class ModuleConfig:
     file_line_coverage_min: Optional[Decimal] = None
+    file_branch_coverage_min: Optional[Decimal] = None
 
     @staticmethod
     def parse(obj: Any) -> ModuleConfig:
         return ModuleConfig(
             file_line_coverage_min=parse_option_field(
                 obj, Decimal, "file_line_coverage_min"
-            )
+            ),
+            file_branch_coverage_min=parse_option_field(
+                obj, Decimal, "file_branch_coverage_min"
+            ),
         )
