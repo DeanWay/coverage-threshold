@@ -19,6 +19,12 @@ parser.add_argument(
     help="minimum global average line coverage threshold",
 )
 parser.add_argument(
+    "--branch-coverage-min",
+    type=Decimal,
+    required=False,
+    help="minimum global average branch coverage threshold",
+)
+parser.add_argument(
     "--file-line-coverage-min",
     type=Decimal,
     required=False,
@@ -69,6 +75,11 @@ def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
             args.file_line_coverage_min
             if args.file_line_coverage_min is not None
             else config.file_line_coverage_min
+        ),
+        branch_coverage_min=(
+            args.branch_coverage_min
+            if args.branch_coverage_min is not None
+            else config.branch_coverage_min
         ),
         modules=config.modules,
     )

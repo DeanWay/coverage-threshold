@@ -9,6 +9,7 @@ src_paths = ["coverage_threshold", "tests"]
 [coverage-threshold]
 line_coverage_min = 95
 file_line_coverage_min = 95
+branch_coverage_min = 50
 
     [coverage-threshold.modules."coverage_threshold/cli/"]
     file_line_coverage_min = 40

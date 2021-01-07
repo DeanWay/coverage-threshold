@@ -53,7 +53,11 @@ def check_file_line_coverage_min(
 
 def check_all_files(report: ReportModel, config: Config) -> CheckResult:
     files_with_module_config = (
-        (filename, file_coverage, best_matching_module_config_for_file(filename, config))
+        (
+            filename,
+            file_coverage,
+            best_matching_module_config_for_file(filename, config),
+        )
         for filename, file_coverage in report.files.items()
     )
     file_checks = (
