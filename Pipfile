@@ -12,6 +12,7 @@ bumpversion = "*"
 coverage = "*"
 mypy = "*"
 black = "*"
+typing_extensions = "*"
 
 [packages]
 coverage-threshold = {editable = true,path = "."}

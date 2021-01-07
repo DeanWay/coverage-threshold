@@ -1,17 +1,19 @@
 from dataclasses import dataclass
 from functools import reduce
-from typing import Iterable, List, Literal, Union
+from typing import Iterable, List, Union, TYPE_CHECKING
+if TYPE_CHECKING:
+    from typing_extensions import Literal
 
 
 @dataclass(frozen=True)
 class Pass:
-    result: Literal[True] = True
+    result: "Literal[True]" = True
 
 
 @dataclass(frozen=True)
 class Fail:
     problems: List[str]
-    result: Literal[False] = False
+    result: "Literal[False]" = False
 
 
 CheckResult = Union[Fail, Pass]

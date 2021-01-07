@@ -19,7 +19,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "coverage-threshold = coverage_threshold.__main__",
+            "coverage-threshold = coverage_threshold.cli:main",
         ],
     },
     install_requires=[],
