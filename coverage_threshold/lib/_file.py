@@ -34,12 +34,12 @@ def check_file_line_coverage_min(
     config: Config,
     module_config: Optional[ModuleConfig],
 ) -> CheckResult:
-    percent_lines_covered_for_file = percent_lines_covered(file_coverage.summary)
     threshold = (
-        module_config.file_line_coverage_min
-        if module_config is not None
-        else config.file_line_coverage_min
-    ) or Decimal("0")
+        (module_config.file_line_coverage_min if module_config is not None else None)
+        or config.file_line_coverage_min
+        or Decimal(0)
+    )
+    percent_lines_covered_for_file = percent_lines_covered(file_coverage.summary)
     if percent_lines_covered_for_file >= threshold:
         return Pass()
     else:
@@ -58,7 +58,10 @@ def check_file_branch_coverage_min(
     config: Config,
     module_config: Optional[ModuleConfig],
 ) -> CheckResult:
-    if module_config is None or module_config.file_branch_coverage_min is None:
+    threshold = (
+        module_config.file_branch_coverage_min if module_config is not None else None
+    ) or config.file_branch_coverage_min
+    if threshold is None:
         return Pass()
     else:
         if not report.meta.branch_coverage:
@@ -67,13 +70,13 @@ def check_file_branch_coverage_min(
                 + " a report with branch coverage data"
             )
         percent_total_branches_covered = percent_branches_covered(file_coverage.summary)
-        if percent_total_branches_covered >= module_config.file_branch_coverage_min:
+        if percent_total_branches_covered >= threshold:
             return Pass()
         else:
             return Fail(
                 [
                     f'File: "{filename}" failed BRANCH coverage metric,'
-                    + f" expected: {module_config.file_branch_coverage_min}, was {percent_total_branches_covered}"
+                    + f" expected: {threshold}, was {percent_total_branches_covered}"
                 ]
             )
 

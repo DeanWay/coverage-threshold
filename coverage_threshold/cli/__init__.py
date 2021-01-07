@@ -1,7 +1,7 @@
 import argparse
 import json
 from decimal import Decimal
-from typing import Optional
+from typing import NamedTuple, Optional
 
 import toml
 
@@ -28,7 +28,13 @@ parser.add_argument(
     "--file-line-coverage-min",
     type=Decimal,
     required=False,
-    help="the coverage threshold for each file",
+    help="the line coverage threshold for each file",
+)
+parser.add_argument(
+    "--file-branch-coverage-min",
+    type=Decimal,
+    required=False,
+    help="the branch coverage threshold for each file",
 )
 parser.add_argument(
     "--coverage-json",
@@ -46,7 +52,9 @@ parser.add_argument(
 
 class ArgsNamespace(argparse.Namespace):
     line_coverage_min: Optional[Decimal]
+    branch_coverage_min: Optional[Decimal]
     file_line_coverage_min: Optional[Decimal]
+    file_branch_coverage_min: Optional[Decimal]
     coverage_json: str
     config: str
 
@@ -71,15 +79,20 @@ def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
             if args.line_coverage_min is not None
             else config.line_coverage_min
         ),
+        branch_coverage_min=(
+            args.branch_coverage_min
+            if args.branch_coverage_min is not None
+            else config.branch_coverage_min
+        ),
         file_line_coverage_min=(
             args.file_line_coverage_min
             if args.file_line_coverage_min is not None
             else config.file_line_coverage_min
         ),
-        branch_coverage_min=(
-            args.branch_coverage_min
-            if args.branch_coverage_min is not None
-            else config.branch_coverage_min
+        file_branch_coverage_min=(
+            args.file_branch_coverage_min
+            if args.file_branch_coverage_min is not None
+            else config.file_branch_coverage_min
         ),
         modules=config.modules,
     )
