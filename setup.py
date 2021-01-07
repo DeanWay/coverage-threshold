@@ -17,6 +17,11 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    entry_points={
+        "console_scripts": [
+            "coverage-threshold = coverage_threshold.__main__",
+        ],
+    },
     install_requires=[],
     python_requires=">=3.7",
 )

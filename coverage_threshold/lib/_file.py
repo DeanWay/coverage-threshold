@@ -7,6 +7,7 @@ from coverage_threshold.lib.functools import prefix_match_length
 from .check_result import CheckResult, Fail, Pass, fold_check_results
 from ._common import percent_lines_covered
 
+
 def best_matching_module_config_for_file(
     filename: str, config: Config
 ) -> Optional[ModuleConfig]:
@@ -47,12 +48,8 @@ def file_at_or_above_line_threshold(
         )
 
 
-def each_file_line_coverage_metric(
-    report: ReportModel, config: Config
-) -> CheckResult:
+def each_file_line_coverage_metric(report: ReportModel, config: Config) -> CheckResult:
     return fold_check_results(
         file_at_or_above_line_threshold(filename, file, config)
         for filename, file in report.files.items()
     )
-
-

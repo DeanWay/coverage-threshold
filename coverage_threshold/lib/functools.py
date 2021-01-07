@@ -1,6 +1,7 @@
 from typing import Callable, Iterable, Iterator, TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 def take_while(f: Callable[[T], bool], iterable: Iterable[T]) -> Iterator[T]:
     for x in iterable:

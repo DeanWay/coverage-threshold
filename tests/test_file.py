@@ -46,8 +46,15 @@ test_report = ReportModel(
 
 
 def test_all_files_at_or_above_threshold() -> None:
-    assert each_file_line_coverage_metric(test_report, Config(line_coverage_threshold_for_every_file=Decimal("50.0"))) == Pass()
-    assert each_file_line_coverage_metric(test_report, Config(line_coverage_threshold_for_every_file=Decimal("75.0"))) == Fail(
+    assert (
+        each_file_line_coverage_metric(
+            test_report, Config(line_coverage_threshold_for_every_file=Decimal("50.0"))
+        )
+        == Pass()
+    )
+    assert each_file_line_coverage_metric(
+        test_report, Config(line_coverage_threshold_for_every_file=Decimal("75.0"))
+    ) == Fail(
         ['File: "src/main.py" failed line coverage metric, expected: 75.0, was 50.0000']
     )
 
