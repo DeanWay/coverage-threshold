@@ -46,7 +46,7 @@ parser.add_argument(
     "--config",
     type=str,
     default="./pyproject.toml",
-    help="path to config toml (default: ./coverage.json)",
+    help="path to config file (default: ./pyproject.toml)",
 )
 
 
