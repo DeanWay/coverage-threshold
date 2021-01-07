@@ -12,7 +12,9 @@ from coverage_threshold.lib.check_result import fold_check_results
 from coverage_threshold.model.config import Config
 from coverage_threshold.model.report import ReportModel
 
-parser = argparse.ArgumentParser(description="")
+parser = argparse.ArgumentParser(
+    description="A command line tool for checking coverage reports against configurable coverage minimums"
+)
 parser.add_argument(
     "--line-coverage-min",
     type=Decimal,
