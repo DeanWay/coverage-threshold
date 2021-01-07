@@ -15,8 +15,6 @@ def check_all(report: ReportModel, config: Config) -> CheckResult:
                 report,
                 config,
             ),
-            total_line_coverage_metric(
-                report, config.total_line_coverage_threshold or Decimal("0.0")
-            ),
+            total_line_coverage_metric(report, config),
         ]
     )

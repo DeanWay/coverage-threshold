@@ -33,9 +33,9 @@ def file_at_or_above_line_threshold(
     percent_lines_covered_for_file = percent_lines_covered(file.summary)
     module_config = best_matching_module_config_for_file(filename, config)
     threshold = (
-        module_config.line_converage_threshold
+        module_config.file_line_coverage_min
         if module_config
-        else config.line_coverage_threshold_for_every_file
+        else config.file_line_coverage_min
     ) or Decimal("0")
     if percent_lines_covered_for_file >= threshold:
         return Pass()

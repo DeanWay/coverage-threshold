@@ -13,16 +13,16 @@ from coverage_threshold.model.report import ReportModel
 
 parser = argparse.ArgumentParser(description="")
 parser.add_argument(
-    "--total-line-coverage-threshold",
+    "--line-coverage-min",
     type=Decimal,
     required=False,
     help="minimum global average line coverage threshold",
 )
 parser.add_argument(
-    "--line-coverage-threshold-for-every-file",
+    "--file-line-coverage-min",
     type=Decimal,
     required=False,
-    help="the coverage threshold",
+    help="the coverage threshold for each file",
 )
 parser.add_argument(
     "--coverage-json",
@@ -39,8 +39,8 @@ parser.add_argument(
 
 
 class ArgsNamespace(argparse.Namespace):
-    total_line_coverage_threshold: Optional[Decimal]
-    line_coverage_threshold_for_every_file: Optional[Decimal]
+    line_coverage_min: Optional[Decimal]
+    file_line_coverage_min: Optional[Decimal]
     coverage_json: str
     config: str
 
@@ -60,12 +60,13 @@ def read_config(config_file_name: str) -> Config:
 
 def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
     return Config(
-        total_line_coverage_threshold=(
-            args.total_line_coverage_threshold or config.total_line_coverage_threshold
+        line_coverage_min=(
+            args.line_coverage_min if args.line_coverage_min is not None else config.line_coverage_min
         ),
-        line_coverage_threshold_for_every_file=(
-            args.line_coverage_threshold_for_every_file
-            or config.line_coverage_threshold_for_every_file
+        file_line_coverage_min=(
+            args.file_line_coverage_min
+            if args.file_line_coverage_min is not None
+            else config.file_line_coverage_min
         ),
         modules=config.modules,
     )

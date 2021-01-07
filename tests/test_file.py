@@ -5,7 +5,7 @@ from coverage_threshold.lib import (
     total_line_coverage_metric,
 )
 from coverage_threshold.lib.check_result import Fail, Pass
-from coverage_threshold.model.config import Config
+from coverage_threshold.model.config import Config, ModuleConfig
 from coverage_threshold.model.report import (
     CoverageSummaryModel,
     FileCoverageModel,
@@ -48,16 +48,16 @@ test_report = ReportModel(
 def test_all_files_at_or_above_threshold() -> None:
     assert (
         each_file_line_coverage_metric(
-            test_report, Config(line_coverage_threshold_for_every_file=Decimal("50.0"))
+            test_report, Config(file_line_coverage_min=Decimal("50.0"))
         )
         == Pass()
     )
     assert each_file_line_coverage_metric(
-        test_report, Config(line_coverage_threshold_for_every_file=Decimal("75.0"))
+        test_report, Config(file_line_coverage_min=Decimal("75.0"))
     ) == Fail(
         ['File: "src/main.py" failed line coverage metric, expected: 75.0, was 50.0000']
     )
 
 
 def test_average_line_coverage_at_or_above_threshold() -> None:
-    assert total_line_coverage_metric(test_report, Decimal("75.0"))
+    assert total_line_coverage_metric(test_report, Config(line_coverage_min=Decimal("75.0")))

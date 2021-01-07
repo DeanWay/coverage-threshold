@@ -7,17 +7,17 @@ profile = "black"
 src_paths = ["coverage_threshold", "tests"]
 
 [coverage-threshold]
-total_line_coverage_threshold = 95
-line_coverage_threshold_for_every_file = 95
+line_coverage_min = 95
+file_line_coverage_min = 95
 
     [coverage-threshold.modules."coverage_threshold/cli/"]
-    line_converage_threshold = 40
+    file_line_coverage_min = 40
 
     [coverage-threshold.modules."coverage_threshold/lib/"]
-    line_converage_threshold = 100
+    file_line_coverage_min = 100
 
     [coverage-threshold.modules."coverage_threshold/model/"]
-    line_converage_threshold = 100
+    file_line_coverage_min = 100
 
     [coverage-threshold.modules."coverage_threshold/__main__.py"]
-    line_converage_threshold = 0
+    file_line_coverage_min = 0
