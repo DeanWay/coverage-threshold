@@ -14,26 +14,16 @@ from .util import parse_option_field
 class CoverageSummaryModel:
     covered_lines: int
     num_statements: int
-    percent_covered: Decimal
-    missing_lines: int
-    excluded_lines: int
     num_branches: Optional[int] = None
-    num_partial_branches: Optional[int] = None
     covered_branches: Optional[int] = None
-    missing_branches: Optional[int] = None
 
     @staticmethod
     def parse(obj: Any) -> CoverageSummaryModel:
         return CoverageSummaryModel(
             covered_lines=int(obj["covered_lines"]),
             num_statements=int(obj["num_statements"]),
-            percent_covered=Decimal(obj["percent_covered"]),
-            missing_lines=int(obj["missing_lines"]),
-            excluded_lines=int(obj["excluded_lines"]),
             num_branches=parse_option_field(obj, int, "num_branches"),
-            num_partial_branches=parse_option_field(obj, int, "num_partial_branches"),
             covered_branches=parse_option_field(obj, int, "covered_branches"),
-            missing_branches=parse_option_field(obj, int, "missing_branches"),
         )
 
 

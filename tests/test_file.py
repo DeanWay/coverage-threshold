@@ -17,27 +17,18 @@ test_report = ReportModel(
             summary=CoverageSummaryModel(
                 covered_lines=1,
                 num_statements=2,
-                percent_covered=Decimal("50.0"),
-                missing_lines=0,
-                excluded_lines=0,
             )
         ),
         "src/lib.py": FileCoverageModel(
             summary=CoverageSummaryModel(
                 covered_lines=2,
                 num_statements=2,
-                percent_covered=Decimal("100.0"),
-                missing_lines=0,
-                excluded_lines=0,
             )
         ),
     },
     totals=CoverageSummaryModel(
         covered_lines=3,
         num_statements=4,
-        percent_covered=Decimal("75.0"),
-        missing_lines=0,
-        excluded_lines=0,
     ),
 )
 
