@@ -30,12 +30,19 @@ parser.add_argument(
     default="./coverage.json",
     help="path to coverage json (default: ./coverage.json)",
 )
+parser.add_argument(
+    "--config",
+    type=str,
+    default="./pyproject.toml",
+    help="path to config toml (default: ./coverage.json)",
+)
 
 
 class ArgsNamespace(argparse.Namespace):
     total_line_coverage_threshold: Optional[Decimal]
     line_coverage_threshold_for_every_file: Optional[Decimal]
     coverage_json: str
+    config: str
 
 
 def bool_to_return_status(x: bool) -> int:
@@ -67,7 +74,7 @@ def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
 def main() -> int:
     args = parser.parse_args(namespace=ArgsNamespace())
     report = read_report(args.coverage_json)
-    config_from_file = read_config("pyproject.toml")
+    config_from_file = read_config(args.config)
     config = combine_config_with_args(args, config_from_file)
     all_checks = check_all(report, config)
     if all_checks.result:
