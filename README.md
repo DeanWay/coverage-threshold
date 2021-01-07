@@ -62,7 +62,7 @@ branch_coverage_min = 50
     [coverage-threshold.modules."src/cli/"]
     file_line_coverage_min = 40
 
-    [coverage-threshold.modules."coverage_threshold/cli/my_command.py"]
+    [coverage-threshold.modules."src/cli/my_command.py"]
     file_line_coverage_min = 100
 
     [coverage-threshold.modules."src/lib/"]
