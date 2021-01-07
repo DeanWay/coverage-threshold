@@ -15,6 +15,7 @@ black = "*"
 typing_extensions = "*"
 
 [packages]
+toml = ">= 0.10.2"
 coverage-threshold = {editable = true,path = "."}
 
 [requires]

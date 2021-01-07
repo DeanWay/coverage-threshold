@@ -14,6 +14,8 @@ setup(
     packages=["coverage_threshold"],
     classifiers=[
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
@@ -22,6 +24,6 @@ setup(
             "coverage-threshold = coverage_threshold.cli:main",
         ],
     },
-    install_requires=[],
+    install_requires=["toml >= 0.10.2"],
     python_requires=">=3.7",
 )
