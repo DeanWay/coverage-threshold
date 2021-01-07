@@ -1,3 +1,19 @@
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[coverage-threshold]
+total_line_coverage_threshold = 95
+line_coverage_threshold_for_every_file = 95
+
+    [coverage-threshold.modules."coverage_threshold/cli/"]
+    line_converage_threshold = 40
+
+    [coverage-threshold.modules."coverage_threshold/lib/"]
+    line_converage_threshold = 100
+
+    [coverage-threshold.modules."coverage_threshold/model/"]
+    line_converage_threshold = 100
+
+    [coverage-threshold.modules."coverage_threshold/__main__.py"]
+    line_converage_threshold = 0
