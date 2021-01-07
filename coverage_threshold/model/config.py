@@ -35,6 +35,6 @@ class ModuleConfig:
     def parse(obj: Any) -> ModuleConfig:
         return ModuleConfig(
             line_converage_threshold=parse_option_field(
-                obj, Decimal, "file_specific_config"
+                obj, Decimal, "line_converage_threshold"
             )
         )
