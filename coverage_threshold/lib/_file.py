@@ -1,5 +1,6 @@
 from decimal import Decimal
-from typing import Iterator, Optional, Tuple
+from itertools import chain
+from typing import Iterable, Iterator, List, Optional, Tuple
 
 from coverage_threshold.model.config import Config, ModuleConfig
 from coverage_threshold.model.report import FileCoverageModel, ReportModel
@@ -27,14 +28,16 @@ def best_matching_module_config_for_file(
         return None
 
 
-def file_at_or_above_line_threshold(
-    filename: str, file: FileCoverageModel, config: Config
+def check_file_line_coverage_min(
+    filename: str,
+    file_coverage: FileCoverageModel,
+    config: Config,
+    module_config: Optional[ModuleConfig],
 ) -> CheckResult:
-    percent_lines_covered_for_file = percent_lines_covered(file.summary)
-    module_config = best_matching_module_config_for_file(filename, config)
+    percent_lines_covered_for_file = percent_lines_covered(file_coverage.summary)
     threshold = (
         module_config.file_line_coverage_min
-        if module_config
+        if module_config is not None
         else config.file_line_coverage_min
     ) or Decimal("0")
     if percent_lines_covered_for_file >= threshold:
@@ -49,7 +52,19 @@ def file_at_or_above_line_threshold(
 
 
 def check_all_files(report: ReportModel, config: Config) -> CheckResult:
-    return fold_check_results(
-        file_at_or_above_line_threshold(filename, file, config)
-        for filename, file in report.files.items()
+    files_with_module_config = (
+        (filename, file_coverage, best_matching_module_config_for_file(filename, config))
+        for filename, file_coverage in report.files.items()
     )
+    file_checks = (
+        [
+            check_file_line_coverage_min(
+                filename=filename,
+                file_coverage=file_coverage,
+                config=config,
+                module_config=module_config,
+            ),
+        ]
+        for filename, file_coverage, module_config in files_with_module_config
+    )
+    return fold_check_results(chain(*file_checks))
