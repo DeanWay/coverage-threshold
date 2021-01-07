@@ -7,7 +7,7 @@ from ._common import percent_lines_covered
 from .check_result import CheckResult, Fail, Pass, fold_check_results
 
 
-def total_line_coverage_metric(report: ReportModel, config: Config) -> CheckResult:
+def check_totals(report: ReportModel, config: Config) -> CheckResult:
     percent_lines_covered_for_file = percent_lines_covered(report.totals)
     threshold = config.line_coverage_min or Decimal("100.0")
     if percent_lines_covered_for_file >= threshold:

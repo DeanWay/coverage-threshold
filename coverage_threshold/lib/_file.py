@@ -48,7 +48,7 @@ def file_at_or_above_line_threshold(
         )
 
 
-def each_file_line_coverage_metric(report: ReportModel, config: Config) -> CheckResult:
+def check_all_files(report: ReportModel, config: Config) -> CheckResult:
     return fold_check_results(
         file_at_or_above_line_threshold(filename, file, config)
         for filename, file in report.files.items()
