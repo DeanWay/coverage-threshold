@@ -60,4 +60,6 @@ def test_all_files_at_or_above_threshold() -> None:
 
 
 def test_average_line_coverage_at_or_above_threshold() -> None:
-    assert total_line_coverage_metric(test_report, Config(line_coverage_min=Decimal("75.0")))
+    assert total_line_coverage_metric(
+        test_report, Config(line_coverage_min=Decimal("75.0"))
+    )

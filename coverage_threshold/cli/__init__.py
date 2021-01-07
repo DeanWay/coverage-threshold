@@ -61,7 +61,9 @@ def read_config(config_file_name: str) -> Config:
 def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
     return Config(
         line_coverage_min=(
-            args.line_coverage_min if args.line_coverage_min is not None else config.line_coverage_min
+            args.line_coverage_min
+            if args.line_coverage_min is not None
+            else config.line_coverage_min
         ),
         file_line_coverage_min=(
             args.file_line_coverage_min
