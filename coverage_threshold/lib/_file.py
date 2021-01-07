@@ -45,7 +45,7 @@ def check_file_line_coverage_min(
     else:
         return Fail(
             [
-                f'File: "{filename}" failed line coverage metric,'
+                f'File: "{filename}" failed LINE coverage metric,'
                 + f" expected: {threshold}, was {percent_lines_covered_for_file}"
             ]
         )
@@ -72,7 +72,7 @@ def check_file_branch_coverage_min(
         else:
             return Fail(
                 [
-                    f"File: {filename} failed branch coverage metric,"
+                    f'File: "{filename}" failed BRANCH coverage metric,'
                     + f" expected: {module_config.file_branch_coverage_min}, was {percent_total_branches_covered}"
                 ]
             )

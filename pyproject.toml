@@ -16,6 +16,7 @@ branch_coverage_min = 50
 
     [coverage-threshold.modules."coverage_threshold/lib/"]
     file_line_coverage_min = 100
+    file_branch_coverage_min = 100
 
     [coverage-threshold.modules."coverage_threshold/model/"]
     file_line_coverage_min = 100

@@ -5,11 +5,11 @@ from coverage_threshold.model.report import CoverageSummaryModel
 
 def _safe_percent(numerator: int, denomenator: int) -> Decimal:
     if denomenator == 0:
-        return Decimal(0)
+        return Decimal(100)
     else:
-        return (
-            (Decimal(numerator) / Decimal(denomenator)) * Decimal("100.0")
-        ).quantize(Decimal("0.0001"))
+        return ((Decimal(numerator) / Decimal(denomenator)) * Decimal(100)).quantize(
+            Decimal("0.0001")
+        )
 
 
 def percent_lines_covered(summary: CoverageSummaryModel) -> Decimal:

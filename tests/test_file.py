@@ -50,7 +50,7 @@ def test_check_all_files() -> None:
     assert check_all_files(
         test_report, Config(file_line_coverage_min=Decimal("75.0"))
     ) == Fail(
-        ['File: "src/main.py" failed line coverage metric, expected: 75.0, was 50.0000']
+        ['File: "src/main.py" failed LINE coverage metric, expected: 75.0, was 50.0000']
     )
 
 
