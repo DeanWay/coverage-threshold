@@ -46,27 +46,27 @@ class FileCoverageModel:
 
 
 @dataclass(frozen=True)
-class JsonReportMetadata:
+class ReportMetadata:
     branch_coverage: bool
 
     @staticmethod
-    def parse(obj: Any) -> JsonReportMetadata:
-        return JsonReportMetadata(branch_coverage=bool(obj["branch_coverage"]))
+    def parse(obj: Any) -> ReportMetadata:
+        return ReportMetadata(branch_coverage=bool(obj["branch_coverage"]))
 
 
 @dataclass(frozen=True)
-class JsonReportModel:
+class ReportModel:
     files: Mapping[str, FileCoverageModel]
     totals: CoverageSummaryModel
-    meta: JsonReportMetadata
+    meta: ReportMetadata
 
     @staticmethod
-    def parse(obj: Any) -> JsonReportModel:
-        return JsonReportModel(
+    def parse(obj: Any) -> ReportModel:
+        return ReportModel(
             files={
                 filename: FileCoverageModel.parse(value)
                 for filename, value in obj["files"].items()
             },
             totals=CoverageSummaryModel.parse(obj["totals"]),
-            meta=JsonReportMetadata.parse(obj["meta"]),
+            meta=ReportMetadata.parse(obj["meta"]),
         )

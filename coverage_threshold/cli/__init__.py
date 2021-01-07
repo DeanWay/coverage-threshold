@@ -5,7 +5,7 @@ from decimal import Decimal
 from typing import Optional
 
 from coverage_threshold.model.config import Config
-from coverage_threshold.model.coverage_json import JsonReportModel
+from coverage_threshold.model.report import ReportModel
 from coverage_threshold.lib import check_all
 from coverage_threshold.lib.check_result import fold_check_results
 from coverage_threshold.cli import colors
@@ -42,9 +42,9 @@ def bool_to_return_status(x: bool) -> int:
     return 0 if x else 1
 
 
-def read_report(coverage_json_filename: str) -> JsonReportModel:
+def read_report(coverage_json_filename: str) -> ReportModel:
     with open(coverage_json_filename) as coverage_json_file:
-        return JsonReportModel.parse(json.loads(coverage_json_file.read()))
+        return ReportModel.parse(json.loads(coverage_json_file.read()))
 
 
 def read_config(config_file_name: str) -> Config:

@@ -2,7 +2,7 @@ from decimal import Decimal
 from typing import Tuple, Iterator, Optional
 
 from coverage_threshold.model.config import Config, ModuleConfig
-from coverage_threshold.model.coverage_json import JsonReportModel, FileCoverageModel
+from coverage_threshold.model.report import ReportModel, FileCoverageModel
 from coverage_threshold.lib.functools import prefix_match_length
 from .check_result import CheckResult, Fail, Pass, fold_check_results
 from ._common import percent_lines_covered
@@ -48,7 +48,7 @@ def file_at_or_above_line_threshold(
 
 
 def each_file_line_coverage_metric(
-    report: JsonReportModel, config: Config
+    report: ReportModel, config: Config
 ) -> CheckResult:
     return fold_check_results(
         file_at_or_above_line_threshold(filename, file, config)

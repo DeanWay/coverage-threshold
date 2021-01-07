@@ -1,11 +1,11 @@
 from decimal import Decimal
 
 from coverage_threshold.model.config import Config
-from coverage_threshold.model.coverage_json import (
-    JsonReportModel,
+from coverage_threshold.model.report import (
+    ReportModel,
     FileCoverageModel,
     CoverageSummaryModel,
-    JsonReportMetadata,
+    ReportMetadata,
 )
 from coverage_threshold.lib import (
     each_file_line_coverage_metric,
@@ -13,8 +13,8 @@ from coverage_threshold.lib import (
 )
 from coverage_threshold.lib.check_result import Pass, Fail
 
-test_report = JsonReportModel(
-    meta=JsonReportMetadata(branch_coverage=False),
+test_report = ReportModel(
+    meta=ReportMetadata(branch_coverage=False),
     files={
         "src/main.py": FileCoverageModel(
             summary=CoverageSummaryModel(

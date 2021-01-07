@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from coverage_threshold.model.coverage_json import CoverageSummaryModel
+from coverage_threshold.model.report import CoverageSummaryModel
 
 
 def _safe_percent(numerator: int, denomenator: int) -> Decimal:
