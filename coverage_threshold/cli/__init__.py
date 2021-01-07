@@ -54,8 +54,7 @@ def read_config(config_file_name: str) -> Config:
 def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
     return Config(
         total_line_coverage_threshold=(
-            args.total_line_coverage_threshold
-            or config.total_line_coverage_threshold
+            args.total_line_coverage_threshold or config.total_line_coverage_threshold
         ),
         line_coverage_threshold_for_every_file=(
             args.line_coverage_threshold_for_every_file
@@ -63,6 +62,7 @@ def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
         ),
         modules=config.modules,
     )
+
 
 def main() -> int:
     args = parser.parse_args(namespace=ArgsNamespace())

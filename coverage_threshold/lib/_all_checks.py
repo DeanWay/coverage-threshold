@@ -12,8 +12,11 @@ def check_all(report: JsonReportModel, config: Config) -> CheckResult:
     return fold_check_results(
         [
             each_file_line_coverage_metric(
-                report, config.line_coverage_threshold_for_every_file or Decimal("100.0")
+                report,
+                config,
             ),
-            total_line_coverage_metric(report, config.total_line_coverage_threshold or Decimal("0.0")),
+            total_line_coverage_metric(
+                report, config.total_line_coverage_threshold or Decimal("0.0")
+            ),
         ]
     )
