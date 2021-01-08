@@ -1,5 +1,4 @@
 import subprocess
-from typing import Final
 
 from coverage_threshold.cli import colors
 
