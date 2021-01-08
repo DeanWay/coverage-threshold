@@ -13,6 +13,7 @@ coverage = "*"
 mypy = "*"
 black = "*"
 typing_extensions = "*"
+hypothesis = "*"
 
 [packages]
 toml = ">= 0.10.2"

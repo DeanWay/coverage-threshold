@@ -25,7 +25,7 @@ def percent_branches_covered(summary: CoverageSummaryModel) -> Decimal:
 
 def percent_combined_lines_and_branches_covered(
     summary: CoverageSummaryModel,
-) -> Decimal:
+) -> Decimal:  # pragma: no cover
     if summary.covered_branches is not None and summary.num_branches is not None:
         return _safe_percent(
             summary.covered_lines + summary.covered_branches,

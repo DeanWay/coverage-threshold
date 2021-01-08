@@ -9,7 +9,11 @@ from .check_result import CheckResult, Fail, Pass, fold_check_results
 
 def check_total_line_coverage_min(report: ReportModel, config: Config) -> CheckResult:
     percent_total_lines_covered = percent_lines_covered(report.totals)
-    threshold = config.line_coverage_min or Decimal("100.0")
+    threshold = (
+        config.line_coverage_min
+        if config.line_coverage_min is not None
+        else Decimal("100.0")
+    )
     if percent_total_lines_covered >= threshold:
         return Pass()
     else:

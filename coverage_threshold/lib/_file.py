@@ -34,10 +34,16 @@ def check_file_line_coverage_min(
     config: Config,
     module_config: Optional[ModuleConfig],
 ) -> CheckResult:
+    threshold_from_config = (
+        module_config.file_line_coverage_min
+        if module_config is not None
+        and module_config.file_line_coverage_min is not None
+        else config.file_line_coverage_min
+        if config.file_line_coverage_min is not None
+        else None
+    )
     threshold = (
-        (module_config.file_line_coverage_min if module_config is not None else None)
-        or config.file_line_coverage_min
-        or Decimal(0)
+        threshold_from_config if threshold_from_config is not None else Decimal(0)
     )
     percent_lines_covered_for_file = percent_lines_covered(file_coverage.summary)
     if percent_lines_covered_for_file >= threshold:
@@ -59,8 +65,12 @@ def check_file_branch_coverage_min(
     module_config: Optional[ModuleConfig],
 ) -> CheckResult:
     threshold = (
-        module_config.file_branch_coverage_min if module_config is not None else None
-    ) or config.file_branch_coverage_min
+        module_config.file_branch_coverage_min
+        if module_config is not None
+        else config.file_branch_coverage_min
+        if config.file_branch_coverage_min is not None
+        else None
+    )
     if threshold is None:
         return Pass()
     else:
