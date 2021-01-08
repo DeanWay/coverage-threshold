@@ -212,7 +212,3 @@ def test_module_level_config() -> None:
             'File: "src/model/b.py" failed BRANCH coverage metric, expected: 80.0, was 75.0000'
         ]
     )
-
-    # assert check_all(report, Config(file_branch_coverage_min=Decimal("75.0"))) == Fail(
-    #
-    # )

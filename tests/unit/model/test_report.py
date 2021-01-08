@@ -10,7 +10,7 @@ from coverage_threshold.model.report import (
 )
 
 
-def test_report_parse__full():
+def test_report_parse__full() -> None:
     assert ReportModel.parse(
         {
             "meta": {
