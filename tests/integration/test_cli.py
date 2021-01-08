@@ -23,6 +23,7 @@ def test_cli_runs_successfully_on_example_project() -> None:
     assert process.stderr == b""
     assert process.stdout == SUCCESS_MESSAGE.encode("utf-8")
 
+
 def test_cli_fails() -> None:
     subprocess.run(
         ["coverage", "run", "-m", "pytest", "tests/"],
@@ -41,4 +42,3 @@ def test_cli_fails() -> None:
         "Failed with 1 errors\n"
         + f"{colors.FAIL}Total line coverage metric failed, expected: 100.0, was 75.0000{colors.ENDC}\n"
     ).encode("utf-8")
-
