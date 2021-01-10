@@ -1,17 +1,23 @@
 import subprocess
 
+import pytest
+
 from coverage_threshold.cli import colors
 
 EXAMPLE_PROJECT_PATH = "./example_project"
 SUCCESS_MESSAGE = f"{colors.OKGREEN}Success!{colors.ENDC}\n"
 
 
-def test_cli_runs_successfully_on_example_project() -> None:
+@pytest.fixture(autouse=True, scope="module")
+def example_project_coverage_json() -> None:
     subprocess.run(
         ["coverage", "run", "-m", "pytest", "tests/"],
         cwd=EXAMPLE_PROJECT_PATH,
     )
     subprocess.run(["coverage", "json"], cwd=EXAMPLE_PROJECT_PATH)
+
+
+def test_cli_runs_successfully_on_example_project() -> None:
     process = subprocess.run(
         ["coverage-threshold"],
         stdout=subprocess.PIPE,
@@ -24,11 +30,6 @@ def test_cli_runs_successfully_on_example_project() -> None:
 
 
 def test_cli_fails() -> None:
-    subprocess.run(
-        ["coverage", "run", "-m", "pytest", "tests/"],
-        cwd=EXAMPLE_PROJECT_PATH,
-    )
-    subprocess.run(["coverage", "json"], cwd=EXAMPLE_PROJECT_PATH)
     process = subprocess.run(
         ["coverage-threshold", "--line-coverage-min", "100.0"],
         stdout=subprocess.PIPE,
