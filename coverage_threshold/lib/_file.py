@@ -32,23 +32,33 @@ def best_matching_module_config_for_file(
         return None
 
 
+def threshold_from_config_and_module_config(
+    config: Config,
+    module_config: Optional[ModuleConfig],
+    attribute: Callable[[Union[Config, ModuleConfig]], Optional[Decimal]],
+) -> Optional[Decimal]:
+    if module_config is not None and attribute(module_config) is not None:
+        return attribute(module_config)
+    else:
+        return attribute(config)
+
+
 def check_file_line_coverage_min(
     filename: str,
     file_coverage: FileCoverageModel,
     config: Config,
     module_config: Optional[ModuleConfig],
 ) -> CheckResult:
-    threshold = (
-        module_config.file_line_coverage_min
-        if module_config is not None
-        and module_config.file_line_coverage_min is not None
-        else config.file_line_coverage_min
-        if config.file_line_coverage_min is not None
-        else None
-    )
+    def file_line_coverage_min_from_config(
+        config_obj: Union[Config, ModuleConfig]
+    ) -> Optional[Decimal]:
+        return config_obj.file_line_coverage_min
+
     return check_line_coverage_min(
         summary=file_coverage.summary,
-        threshold=threshold,
+        threshold=threshold_from_config_and_module_config(
+            config, module_config, attribute=file_line_coverage_min_from_config
+        ),
         failure_message_prefix=f'File: "{filename}" failed LINE coverage metric',
     )
 
@@ -59,16 +69,16 @@ def check_file_branch_coverage_min(
     config: Config,
     module_config: Optional[ModuleConfig],
 ) -> CheckResult:
-    threshold = (
-        module_config.file_branch_coverage_min
-        if module_config is not None
-        else config.file_branch_coverage_min
-        if config.file_branch_coverage_min is not None
-        else None
-    )
+    def file_branch_coverage_min_from_config(
+        config_obj: Union[Config, ModuleConfig]
+    ) -> Optional[Decimal]:
+        return config_obj.file_branch_coverage_min
+
     return check_branch_coverage_min(
         summary=file_coverage.summary,
-        threshold=threshold,
+        threshold=threshold_from_config_and_module_config(
+            config, module_config, attribute=file_branch_coverage_min_from_config
+        ),
         failure_message_prefix=f'File: "{filename}" failed BRANCH coverage metric',
     )
 
@@ -79,16 +89,16 @@ def check_file_combined_coverage_min(
     config: Config,
     module_config: Optional[ModuleConfig],
 ) -> CheckResult:
-    threshold = (
-        module_config.file_combined_coverage_min
-        if module_config is not None
-        else config.file_combined_coverage_min
-        if config.file_combined_coverage_min is not None
-        else None
-    )
+    def file_branch_coverage_min_from_config(
+        config_obj: Union[Config, ModuleConfig]
+    ) -> Optional[Decimal]:
+        return config_obj.file_combined_coverage_min
+
     return check_combined_coverage_min(
         summary=file_coverage.summary,
-        threshold=threshold,
+        threshold=threshold_from_config_and_module_config(
+            config, module_config, attribute=file_branch_coverage_min_from_config
+        ),
         failure_message_prefix=f'File: "{filename}" failed COMBINED line plus branch coverage metric',
     )
 
