@@ -10,7 +10,7 @@ setup(
     description="Tools for coverage threshold limits",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/DeanWay/coverage-treshold",
+    url="https://github.com/DeanWay/coverage-threshold",
     packages=["coverage_threshold"],
     classifiers=[
         "Programming Language :: Python :: 3.7",
