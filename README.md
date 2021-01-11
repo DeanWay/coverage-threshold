@@ -25,8 +25,10 @@ cli command options:
 > coverage-threshold --help
 usage: coverage-threshold [-h] [--line-coverage-min LINE_COVERAGE_MIN]
                           [--branch-coverage-min BRANCH_COVERAGE_MIN]
+                          [--combined-coverage-min COMBINED_COVERAGE_MIN]
                           [--file-line-coverage-min FILE_LINE_COVERAGE_MIN]
                           [--file-branch-coverage-min FILE_BRANCH_COVERAGE_MIN]
+                          [--file-combined-coverage-min FILE_COMBINED_COVERAGE_MIN]
                           [--coverage-json COVERAGE_JSON] [--config CONFIG]
 
 A command line tool for checking coverage reports against configurable coverage minimums
@@ -37,10 +39,14 @@ optional arguments:
                         minimum global average line coverage threshold
   --branch-coverage-min BRANCH_COVERAGE_MIN
                         minimum global average branch coverage threshold
+  --combined-coverage-min COMBINED_COVERAGE_MIN
+                        minimum global average combined line and branch coverage threshold
   --file-line-coverage-min FILE_LINE_COVERAGE_MIN
                         the line coverage threshold for each file
   --file-branch-coverage-min FILE_BRANCH_COVERAGE_MIN
                         the branch coverage threshold for each file
+  --file-combined-coverage-min FILE_COMBINED_COVERAGE_MIN
+                        the combined line and branch coverage threshold for each file
   --coverage-json COVERAGE_JSON
                         path to coverage json (default: ./coverage.json)
   --config CONFIG       path to config file (default: ./pyproject.toml)
