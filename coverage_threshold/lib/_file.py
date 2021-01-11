@@ -1,11 +1,15 @@
 from decimal import Decimal
 from itertools import chain
-from typing import Optional
+from typing import Callable, Optional, Union
 
 from coverage_threshold.model.config import Config, ModuleConfig
 from coverage_threshold.model.report import FileCoverageModel, ReportModel
 
-from ._common import check_branch_coverage_min, check_line_coverage_min
+from ._common import (
+    check_branch_coverage_min,
+    check_combined_coverage_min,
+    check_line_coverage_min,
+)
 from .check_result import CheckResult, fold_check_results
 
 
@@ -69,6 +73,26 @@ def check_file_branch_coverage_min(
     )
 
 
+def check_file_combined_coverage_min(
+    filename: str,
+    file_coverage: FileCoverageModel,
+    config: Config,
+    module_config: Optional[ModuleConfig],
+):
+    threshold = (
+        module_config.file_combined_coverage_min
+        if module_config is not None
+        else config.file_combined_coverage_min
+        if config.file_combined_coverage_min is not None
+        else None
+    )
+    return check_combined_coverage_min(
+        summary=file_coverage.summary,
+        threshold=threshold,
+        failure_message_prefix=f'File: "{filename}" failed COMBINED line plus branch coverage metric',
+    )
+
+
 def check_all_files(report: ReportModel, config: Config) -> CheckResult:
     files_with_module_config = (
         (
@@ -87,6 +111,12 @@ def check_all_files(report: ReportModel, config: Config) -> CheckResult:
                 module_config=module_config,
             ),
             check_file_branch_coverage_min(
+                filename=filename,
+                file_coverage=file_coverage,
+                config=config,
+                module_config=module_config,
+            ),
+            check_file_combined_coverage_min(
                 filename=filename,
                 file_coverage=file_coverage,
                 config=config,

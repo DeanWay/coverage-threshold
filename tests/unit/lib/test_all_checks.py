@@ -168,6 +168,41 @@ def test_check_all_files_with_branch_coverage() -> None:
     )
 
 
+def test_check_all_files_with_combined_coverage() -> None:
+    report = create_report(
+        meta=ReportMetadata(branch_coverage=True),
+        files={
+            "a.py": FileCoverageModel(
+                summary=CoverageSummaryModel(
+                    covered_lines=5,
+                    num_statements=5,
+                    covered_branches=1,
+                    num_branches=5,
+                )
+            ),
+            "b.py": FileCoverageModel(
+                summary=CoverageSummaryModel(
+                    covered_lines=5,
+                    num_statements=5,
+                    covered_branches=3,
+                    num_branches=5,
+                )
+            ),
+        },
+    )
+
+    assert (
+        check_all(report, Config(file_combined_coverage_min=Decimal("60.0"))) == Pass()
+    )
+    assert check_all(
+        report, Config(file_combined_coverage_min=Decimal("80.0"))
+    ) == Fail(
+        [
+            'File: "a.py" failed COMBINED line plus branch coverage metric, expected 80.0, was 60.0000'
+        ]
+    )
+
+
 def test_module_level_config() -> None:
     report = create_report(
         meta=ReportMetadata(branch_coverage=True),

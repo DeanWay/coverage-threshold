@@ -46,6 +46,12 @@ parser.add_argument(
     help="the branch coverage threshold for each file",
 )
 parser.add_argument(
+    "--file-combined-coverage-min",
+    type=Decimal,
+    required=False,
+    help="the combined line and branch coverage threshold for each file",
+)
+parser.add_argument(
     "--coverage-json",
     type=str,
     default="./coverage.json",
@@ -65,6 +71,7 @@ class ArgsNamespace(argparse.Namespace):
     combined_coverage_min: Optional[Decimal]
     file_line_coverage_min: Optional[Decimal]
     file_branch_coverage_min: Optional[Decimal]
+    file_combined_coverage_min: Optional[Decimal]
     coverage_json: str
     config: str
 
@@ -117,6 +124,11 @@ def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
             args.file_branch_coverage_min
             if args.file_branch_coverage_min is not None
             else config.file_branch_coverage_min
+        ),
+        file_combined_coverage_min=(
+            args.file_combined_coverage_min
+            if args.file_combined_coverage_min is not None
+            else config.file_combined_coverage_min
         ),
         modules=config.modules,
     )

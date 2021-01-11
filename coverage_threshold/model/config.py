@@ -14,6 +14,7 @@ class Config:
     combined_coverage_min: Optional[Decimal] = None
     file_line_coverage_min: Optional[Decimal] = None
     file_branch_coverage_min: Optional[Decimal] = None
+    file_combined_coverage_min: Optional[Decimal] = None
     modules: Optional[Mapping[str, ModuleConfig]] = None
 
     @staticmethod
@@ -30,6 +31,9 @@ class Config:
             file_branch_coverage_min=parse_option_field(
                 obj, Decimal, "file_branch_coverage_min"
             ),
+            file_combined_coverage_min=parse_option_field(
+                obj, Decimal, "file_combined_coverage_min"
+            ),
             modules={k: ModuleConfig.parse(v) for k, v in obj["modules"].items()}
             if "modules" in obj
             else None,
@@ -40,6 +44,7 @@ class Config:
 class ModuleConfig:
     file_line_coverage_min: Optional[Decimal] = None
     file_branch_coverage_min: Optional[Decimal] = None
+    file_combined_coverage_min: Optional[Decimal] = None
 
     @staticmethod
     def parse(obj: Any) -> ModuleConfig:
@@ -49,5 +54,8 @@ class ModuleConfig:
             ),
             file_branch_coverage_min=parse_option_field(
                 obj, Decimal, "file_branch_coverage_min"
+            ),
+            file_combined_coverage_min=parse_option_field(
+                obj, Decimal, "file_combined_coverage_min"
             ),
         )

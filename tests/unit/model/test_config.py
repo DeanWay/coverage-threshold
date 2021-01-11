@@ -21,6 +21,7 @@ def test_config_parse__ignores_extra_fields() -> None:
         "combined_coverage_min",
         "file_line_coverage_min",
         "file_branch_coverage_min",
+        "file_combined_coverage_min",
     ],
 )
 def test_config_parse__optional_decimals(field_name: str) -> None:
