@@ -78,7 +78,7 @@ def check_file_combined_coverage_min(
     file_coverage: FileCoverageModel,
     config: Config,
     module_config: Optional[ModuleConfig],
-):
+) -> CheckResult:
     threshold = (
         module_config.file_combined_coverage_min
         if module_config is not None
