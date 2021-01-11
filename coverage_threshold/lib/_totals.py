@@ -37,7 +37,7 @@ def check_total_combined_coverage_min(
     )
     return check_combined_coverage_min(
         summary=report.totals,
-        threshold=config.combined_coverage_min,
+        threshold=threshold,
         failure_message_prefix="Total combined coverage metric failed",
     )
 
