@@ -28,6 +28,12 @@ parser.add_argument(
     help="minimum global average branch coverage threshold",
 )
 parser.add_argument(
+    "--combined-coverage-min",
+    type=Decimal,
+    required=False,
+    help="minimum global average combined line and branch coverage threshold",
+)
+parser.add_argument(
     "--file-line-coverage-min",
     type=Decimal,
     required=False,
@@ -56,6 +62,7 @@ parser.add_argument(
 class ArgsNamespace(argparse.Namespace):
     line_coverage_min: Optional[Decimal]
     branch_coverage_min: Optional[Decimal]
+    combined_coverage_min: Optional[Decimal]
     file_line_coverage_min: Optional[Decimal]
     file_branch_coverage_min: Optional[Decimal]
     coverage_json: str
@@ -95,6 +102,11 @@ def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
             args.branch_coverage_min
             if args.branch_coverage_min is not None
             else config.branch_coverage_min
+        ),
+        combined_coverage_min=(
+            args.combined_coverage_min
+            if args.combined_coverage_min
+            else config.combined_coverage_min
         ),
         file_line_coverage_min=(
             args.file_line_coverage_min

@@ -48,7 +48,7 @@ def test_check_totals() -> None:
             ),
             Config(line_coverage_min=Decimal("67.0")),
         )
-        == Fail(["Total line coverage metric failed, expected: 67.0, was 66.6667"])
+        == Fail(["Total line coverage metric failed, expected 67.0, was 66.6667"])
     )
 
 
@@ -66,16 +66,13 @@ def test_check_all_files() -> None:
 
     assert check_all(report, Config(file_line_coverage_min=Decimal("50.0"))) == Pass()
     assert check_all(report, Config(file_line_coverage_min=Decimal("75.0"))) == Fail(
-        ['File: "a.py" failed LINE coverage metric, expected: 75.0, was 50.0000']
+        ['File: "a.py" failed LINE coverage metric, expected 75.0, was 50.0000']
     )
 
 
 def test_checking_branch_coverage_fails_without_branch_report() -> None:
     report = create_report(meta=ReportMetadata(branch_coverage=False))
-    expected_error_message = (
-        "trying to check branch coverage without providing"
-        + " a report with branch coverage data"
-    )
+    expected_error_message = "missing number of branches or number of branches covered"
 
     with pytest.raises(ValueError) as e:
         check_all(report, Config(branch_coverage_min=Decimal("50.0")))
@@ -108,7 +105,7 @@ def test_check_totals_with_branch_coverage() -> None:
             report,
             Config(branch_coverage_min=Decimal("75.001")),
         )
-        == Fail(["Total branch coverage metric failed, expected: 75.001, was 75.0000"])
+        == Fail(["Total branch coverage metric failed, expected 75.001, was 75.0000"])
     )
 
 
@@ -137,7 +134,7 @@ def test_check_all_files_with_branch_coverage() -> None:
 
     assert check_all(report, Config(file_branch_coverage_min=Decimal("50.0"))) == Pass()
     assert check_all(report, Config(file_branch_coverage_min=Decimal("75.0"))) == Fail(
-        ['File: "a.py" failed BRANCH coverage metric, expected: 75.0, was 50.0000']
+        ['File: "a.py" failed BRANCH coverage metric, expected 75.0, was 50.0000']
     )
 
 
@@ -209,6 +206,6 @@ def test_module_level_config() -> None:
         ),
     ) == Fail(
         [
-            'File: "src/model/b.py" failed BRANCH coverage metric, expected: 80.0, was 75.0000'
+            'File: "src/model/b.py" failed BRANCH coverage metric, expected 80.0, was 75.0000'
         ]
     )

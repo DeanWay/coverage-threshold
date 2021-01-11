@@ -11,6 +11,7 @@ from .util import parse_option_field
 class Config:
     line_coverage_min: Optional[Decimal] = None
     branch_coverage_min: Optional[Decimal] = None
+    combined_coverage_min: Optional[Decimal] = None
     file_line_coverage_min: Optional[Decimal] = None
     file_branch_coverage_min: Optional[Decimal] = None
     modules: Optional[Mapping[str, ModuleConfig]] = None
@@ -20,6 +21,9 @@ class Config:
         return Config(
             line_coverage_min=parse_option_field(obj, Decimal, "line_coverage_min"),
             branch_coverage_min=parse_option_field(obj, Decimal, "branch_coverage_min"),
+            combined_coverage_min=parse_option_field(
+                obj, Decimal, "combined_coverage_min"
+            ),
             file_line_coverage_min=parse_option_field(
                 obj, Decimal, "file_line_coverage_min"
             ),

@@ -1,6 +1,21 @@
 from decimal import Decimal
+from typing import TYPE_CHECKING, Callable, Optional
 
 from coverage_threshold.model.report import CoverageSummaryModel
+
+from .check_result import CheckResult, Fail, Pass
+
+if TYPE_CHECKING:  # pragma: no cover
+    from typing_extensions import Protocol
+
+    class CheckFunction(Protocol):
+        def __call__(
+            self,
+            summary: CoverageSummaryModel,
+            threshold: Optional[Decimal],
+            failure_message_prefix: str,
+        ) -> CheckResult:
+            ...
 
 
 def _safe_percent(numerator: int, denomenator: int) -> Decimal:
@@ -33,3 +48,32 @@ def percent_combined_lines_and_branches_covered(
         )
     else:
         raise ValueError("missing number of branches or number of branches covered")
+
+
+def _check(
+    percent_covered_function: Callable[[CoverageSummaryModel], Decimal]
+) -> "CheckFunction":
+    def resulting_function(
+        summary: CoverageSummaryModel,
+        threshold: Optional[Decimal],
+        failure_message_prefix: str,
+    ) -> CheckResult:
+        if threshold is None:
+            return Pass()
+        else:
+            percent_covered = percent_covered_function(summary)
+            if percent_covered >= threshold:
+                return Pass()
+            else:
+                return Fail(
+                    [
+                        f"{failure_message_prefix}, expected {threshold}, was {percent_covered}"
+                    ]
+                )
+
+    return resulting_function
+
+
+check_line_coverage_min = _check(percent_lines_covered)
+check_branch_coverage_min = _check(percent_branches_covered)
+check_combined_coverage_min = _check(percent_combined_lines_and_branches_covered)
