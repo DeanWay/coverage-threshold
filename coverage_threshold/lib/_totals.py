@@ -12,14 +12,9 @@ from .check_result import CheckResult, fold_check_results
 
 
 def check_total_line_coverage_min(report: ReportModel, config: Config) -> CheckResult:
-    threshold = (
-        config.line_coverage_min
-        if config.line_coverage_min is not None
-        else Decimal("100.0")
-    )
     return check_line_coverage_min(
         summary=report.totals,
-        threshold=threshold,
+        threshold=config.line_coverage_min,
         failure_message_prefix="Total line coverage metric failed",
     )
 
@@ -35,6 +30,11 @@ def check_total_branch_coverage_min(report: ReportModel, config: Config) -> Chec
 def check_total_combined_coverage_min(
     report: ReportModel, config: Config
 ) -> CheckResult:
+    threshold = (
+        config.combined_coverage_min
+        if config.combined_coverage_min is not None
+        else Decimal("100.0")
+    )
     return check_combined_coverage_min(
         summary=report.totals,
         threshold=config.combined_coverage_min,
