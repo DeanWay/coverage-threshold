@@ -112,7 +112,7 @@ def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
         ),
         combined_coverage_min=(
             args.combined_coverage_min
-            if args.combined_coverage_min
+            if args.combined_coverage_min is not None
             else config.combined_coverage_min
         ),
         file_line_coverage_min=(
