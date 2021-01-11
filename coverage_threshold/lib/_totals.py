@@ -34,7 +34,7 @@ def check_total_branch_coverage_min(report: ReportModel, config: Config) -> Chec
 
 def check_total_combined_coverage_min(
     report: ReportModel, config: Config
-) -> CheckResult:  # pragma: no cover
+) -> CheckResult:
     return check_combined_coverage_min(
         summary=report.totals,
         threshold=config.combined_coverage_min,

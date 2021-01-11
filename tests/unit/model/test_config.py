@@ -18,6 +18,7 @@ def test_config_parse__ignores_extra_fields() -> None:
     [
         "line_coverage_min",
         "branch_coverage_min",
+        "combined_coverage_min",
         "file_line_coverage_min",
         "file_branch_coverage_min",
     ],

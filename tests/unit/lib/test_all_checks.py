@@ -79,6 +79,10 @@ def test_checking_branch_coverage_fails_without_branch_report() -> None:
     assert str(e.value) == expected_error_message
 
     with pytest.raises(ValueError) as e:
+        check_all(report, Config(combined_coverage_min=Decimal("50.0")))
+    assert str(e.value) == expected_error_message
+
+    with pytest.raises(ValueError) as e:
         check_all(report, Config(file_branch_coverage_min=Decimal("75.0")))
     assert str(e.value) == expected_error_message
 
@@ -106,6 +110,32 @@ def test_check_totals_with_branch_coverage() -> None:
             Config(branch_coverage_min=Decimal("75.001")),
         )
         == Fail(["Total branch coverage metric failed, expected 75.001, was 75.0000"])
+    )
+
+
+def test_check_totals_with_combined_coverage() -> None:
+    report = create_report(
+        meta=ReportMetadata(branch_coverage=True),
+        totals=CoverageSummaryModel(
+            covered_lines=5,
+            num_statements=5,
+            covered_branches=3,
+            num_branches=5,
+        ),
+    )
+    assert (
+        check_all(
+            report,
+            Config(combined_coverage_min=Decimal("80.0")),
+        )
+        == Pass()
+    )
+    assert (
+        check_all(
+            report,
+            Config(combined_coverage_min=Decimal("80.001")),
+        )
+        == Fail(["Total combined coverage metric failed, expected 80.001, was 80.0000"])
     )
 
 
