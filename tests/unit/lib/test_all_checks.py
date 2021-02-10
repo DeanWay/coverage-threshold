@@ -198,7 +198,8 @@ def test_check_all_files_with_combined_coverage() -> None:
         report, Config(file_combined_coverage_min=Decimal("80.0"))
     ) == Fail(
         [
-            'File: "a.py" failed COMBINED line plus branch coverage metric, expected 80.0, was 60.0000'
+            'File: "a.py" failed COMBINED line plus branch coverage metric'
+            + ", expected 80.0, was 60.0000"
         ]
     )
 
@@ -271,6 +272,7 @@ def test_module_level_config() -> None:
         ),
     ) == Fail(
         [
-            'File: "src/model/b.py" failed BRANCH coverage metric, expected 80.0, was 75.0000'
+            'File: "src/model/b.py" failed BRANCH coverage metric'
+            + ", expected 80.0, was 75.0000"
         ]
     )

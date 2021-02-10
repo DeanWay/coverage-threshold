@@ -1,7 +1,3 @@
-from decimal import Decimal
-
-import pytest
-
 from coverage_threshold.model.report import (
     CoverageSummaryModel,
     FileCoverageModel,

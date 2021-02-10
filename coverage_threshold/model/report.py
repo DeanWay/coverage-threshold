@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from decimal import Decimal
-from typing import Any, List, Mapping, Optional
+from typing import Any, Mapping, Optional
 
 from .util import parse_option_field
 

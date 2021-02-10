@@ -14,6 +14,7 @@ mypy = "*"
 black = "*"
 typing_extensions = "*"
 hypothesis = "*"
+flake8 = "*"
 
 [packages]
 toml = ">= 0.10.2"

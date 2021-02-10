@@ -99,7 +99,9 @@ def check_file_combined_coverage_min(
         threshold=threshold_from_config_and_module_config(
             config, module_config, attribute=file_branch_coverage_min_from_config
         ),
-        failure_message_prefix=f'File: "{filename}" failed COMBINED line plus branch coverage metric',
+        failure_message_prefix=(
+            f'File: "{filename}" failed COMBINED line plus branch coverage metric'
+        ),
     )
 
 

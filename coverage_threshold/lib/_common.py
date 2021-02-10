@@ -60,16 +60,15 @@ def _check(
     ) -> CheckResult:
         if threshold is None:
             return Pass()
+
+        percent_covered = percent_covered_function(summary)
+        if percent_covered >= threshold:
+            return Pass()
         else:
-            percent_covered = percent_covered_function(summary)
-            if percent_covered >= threshold:
-                return Pass()
-            else:
-                return Fail(
-                    [
-                        f"{failure_message_prefix}, expected {threshold}, was {percent_covered}"
-                    ]
-                )
+            message = (
+                f"{failure_message_prefix}, expected {threshold}, was {percent_covered}"
+            )
+            return Fail([message])
 
     return resulting_function
 

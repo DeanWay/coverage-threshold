@@ -40,5 +40,6 @@ def test_cli_fails() -> None:
     assert process.stderr == b""
     assert process.stdout == (
         "Failed with 1 errors\n"
-        + f"{colors.FAIL}Total line coverage metric failed, expected 100.0, was 75.0000{colors.ENDC}\n"
+        + f"{colors.FAIL}Total line coverage metric failed"
+        + f", expected 100.0, was 75.0000{colors.ENDC}\n"
     ).encode("utf-8")
