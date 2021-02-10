@@ -2,4 +2,4 @@
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 cd ..
 
-pytest tests/
+pytest tests/ coverage_threshold/ --doctest-modules

@@ -21,6 +21,19 @@ CheckResult = Union[Fail, Pass]
 
 
 def combine_check_results(first: CheckResult, second: CheckResult) -> CheckResult:
+    """
+    >>> combine_check_results(Pass(), Pass())
+    Pass(result=True)
+
+    >>> combine_check_results(Pass(), Fail(['no!']))
+    Fail(problems=['no!'], result=False)
+
+    >>> combine_check_results(Fail(['oh!']), Pass())
+    Fail(problems=['oh!'], result=False)
+
+    >>> combine_check_results(Fail(['oh!']), Fail(['no!']))
+    Fail(problems=['oh!', 'no!'], result=False)
+    """
     if isinstance(first, Pass):
         return second
     elif isinstance(second, Pass):
