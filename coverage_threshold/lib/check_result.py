@@ -3,7 +3,7 @@ from functools import reduce
 from typing import TYPE_CHECKING, Iterable, List, Union
 
 if TYPE_CHECKING:
-    from typing_extensions import Literal  # pragma: no cover
+    from typing_extensions import Literal
 
 
 @dataclass(frozen=True)

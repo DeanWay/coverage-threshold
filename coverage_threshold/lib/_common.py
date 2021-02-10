@@ -5,7 +5,7 @@ from coverage_threshold.model.report import CoverageSummaryModel
 
 from .check_result import CheckResult, Fail, Pass
 
-if TYPE_CHECKING:  # pragma: no cover
+if TYPE_CHECKING:
     from typing_extensions import Protocol
 
     class CheckFunction(Protocol):
