@@ -36,6 +36,12 @@ parser.add_argument(
     help="minimum global average combined line and branch coverage threshold",
 )
 parser.add_argument(
+    "--number-missing-lines-max",
+    type=int,
+    required=False,
+    help="maximum global threshold for lines not covered",
+)
+parser.add_argument(
     "--file-line-coverage-min",
     type=Decimal,
     required=False,
@@ -71,6 +77,7 @@ class ArgsNamespace(argparse.Namespace):
     line_coverage_min: Optional[Decimal]
     branch_coverage_min: Optional[Decimal]
     combined_coverage_min: Optional[Decimal]
+    number_missing_lines_max: Optional[int]
     file_line_coverage_min: Optional[Decimal]
     file_branch_coverage_min: Optional[Decimal]
     file_combined_coverage_min: Optional[Decimal]
@@ -116,6 +123,11 @@ def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
             args.combined_coverage_min
             if args.combined_coverage_min is not None
             else config.combined_coverage_min
+        ),
+        number_missing_lines_max=(
+            args.number_missing_lines_max
+            if args.number_missing_lines_max is not None
+            else config.number_missing_lines_max
         ),
         file_line_coverage_min=(
             args.file_line_coverage_min

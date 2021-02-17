@@ -7,6 +7,7 @@ from ._common import (
     check_branch_coverage_min,
     check_combined_coverage_min,
     check_line_coverage_min,
+    check_number_missing_lines_max,
 )
 from .check_result import CheckResult, fold_check_results
 
@@ -42,11 +43,22 @@ def check_total_combined_coverage_min(
     )
 
 
+def check_total_number_missing_lines_max(
+    report: ReportModel, config: Config
+) -> CheckResult:
+    return check_number_missing_lines_max(
+        summary=report.totals,
+        threshold=config.number_missing_lines_max,
+        failure_message_prefix="Total number missing lines max failed",
+    )
+
+
 def check_totals(report: ReportModel, config: Config) -> CheckResult:
     return fold_check_results(
         [
             check_total_line_coverage_min(report, config),
             check_total_branch_coverage_min(report, config),
             check_total_combined_coverage_min(report, config),
+            check_total_number_missing_lines_max(report, config),
         ]
     )
