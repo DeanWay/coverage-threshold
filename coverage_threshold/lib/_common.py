@@ -1,5 +1,6 @@
-from operator import ge as greater_or_eq, le as less_or_eq
 from decimal import Decimal
+from operator import ge as greater_or_eq
+from operator import le as less_or_eq
 from typing import TYPE_CHECKING, Any, Callable, Optional, TypeVar
 
 from coverage_threshold.model.report import CoverageSummaryModel
