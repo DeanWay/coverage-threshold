@@ -2,4 +2,4 @@
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 ./static-analysis.sh
-./test.sh
+./coverage.sh
