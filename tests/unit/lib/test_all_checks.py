@@ -52,6 +52,27 @@ def test_check_totals() -> None:
     )
 
 
+def test_check_totals__with_number_missing_lines_max() -> None:
+    report = create_report(
+        totals=CoverageSummaryModel(covered_lines=3, num_statements=7)
+    )
+    assert (
+        check_all(
+            report, Config(line_coverage_min=Decimal(0), number_missing_lines_max=5)
+        )
+        == Pass()
+    )
+    assert (
+        check_all(
+            report, Config(line_coverage_min=Decimal(0), number_missing_lines_max=4)
+        )
+        == Pass()
+    )
+    assert check_all(
+        report, Config(line_coverage_min=Decimal(0), number_missing_lines_max=3)
+    ) == Fail(["Total number missing lines max failed, expected 3, was 4"])
+
+
 def test_check_all_files() -> None:
     report = create_report(
         files={

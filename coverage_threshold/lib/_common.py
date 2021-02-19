@@ -1,18 +1,23 @@
 from decimal import Decimal
-from typing import TYPE_CHECKING, Callable, Optional
+from operator import ge as greater_or_eq
+from operator import le as less_or_eq
+from typing import TYPE_CHECKING, Any, Callable, Optional, TypeVar
 
 from coverage_threshold.model.report import CoverageSummaryModel
 
 from .check_result import CheckResult, Fail, Pass
 
+Num = TypeVar("Num", Decimal, int)
 if TYPE_CHECKING:
     from typing_extensions import Protocol
 
-    class CheckFunction(Protocol):
+    T = TypeVar("T", contravariant=True)
+
+    class CheckFunction(Protocol[T]):
         def __call__(
             self,
             summary: CoverageSummaryModel,
-            threshold: Optional[Decimal],
+            threshold: Optional[T],
             failure_message_prefix: str,
         ) -> CheckResult:
             ...
@@ -50,29 +55,35 @@ def percent_combined_lines_and_branches_covered(
         raise ValueError("missing number of branches or number of branches covered")
 
 
+def number_lines_not_covered(summary: CoverageSummaryModel) -> int:
+    return summary.num_statements - summary.covered_lines
+
+
 def _check(
-    percent_covered_function: Callable[[CoverageSummaryModel], Decimal]
-) -> "CheckFunction":
+    comparison_function: Callable[[Any, Any], bool],
+    coverage_value_from_summary: Callable[[CoverageSummaryModel], Num],
+) -> "CheckFunction[Num]":
     def resulting_function(
         summary: CoverageSummaryModel,
-        threshold: Optional[Decimal],
+        threshold: Optional[Num],
         failure_message_prefix: str,
     ) -> CheckResult:
         if threshold is None:
             return Pass()
 
-        percent_covered = percent_covered_function(summary)
-        if percent_covered >= threshold:
+        covered = coverage_value_from_summary(summary)
+        if comparison_function(threshold, covered):
             return Pass()
         else:
-            message = (
-                f"{failure_message_prefix}, expected {threshold}, was {percent_covered}"
-            )
+            message = f"{failure_message_prefix}, expected {threshold}, was {covered}"
             return Fail([message])
 
     return resulting_function
 
 
-check_line_coverage_min = _check(percent_lines_covered)
-check_branch_coverage_min = _check(percent_branches_covered)
-check_combined_coverage_min = _check(percent_combined_lines_and_branches_covered)
+check_line_coverage_min = _check(less_or_eq, percent_lines_covered)
+check_branch_coverage_min = _check(less_or_eq, percent_branches_covered)
+check_combined_coverage_min = _check(
+    less_or_eq, percent_combined_lines_and_branches_covered
+)
+check_number_missing_lines_max = _check(greater_or_eq, number_lines_not_covered)
