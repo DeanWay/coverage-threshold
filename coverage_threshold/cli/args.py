@@ -2,6 +2,7 @@ import argparse
 from decimal import Decimal
 from typing import Optional
 
+from coverage_threshold.lib.alternative import fallback
 from coverage_threshold.model.config import Config
 
 parser = argparse.ArgumentParser(
@@ -80,40 +81,24 @@ class ArgsNamespace(argparse.Namespace):
 
 def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
     return Config(
-        line_coverage_min=(
-            args.line_coverage_min
-            if args.line_coverage_min is not None
-            else config.line_coverage_min
+        line_coverage_min=fallback(args.line_coverage_min, config.line_coverage_min),
+        branch_coverage_min=fallback(
+            args.branch_coverage_min, config.branch_coverage_min
         ),
-        branch_coverage_min=(
-            args.branch_coverage_min
-            if args.branch_coverage_min is not None
-            else config.branch_coverage_min
+        combined_coverage_min=fallback(
+            args.combined_coverage_min, config.combined_coverage_min
         ),
-        combined_coverage_min=(
-            args.combined_coverage_min
-            if args.combined_coverage_min is not None
-            else config.combined_coverage_min
+        number_missing_lines_max=fallback(
+            args.number_missing_lines_max, config.number_missing_lines_max
         ),
-        number_missing_lines_max=(
-            args.number_missing_lines_max
-            if args.number_missing_lines_max is not None
-            else config.number_missing_lines_max
+        file_line_coverage_min=fallback(
+            args.file_line_coverage_min, config.file_line_coverage_min
         ),
-        file_line_coverage_min=(
-            args.file_line_coverage_min
-            if args.file_line_coverage_min is not None
-            else config.file_line_coverage_min
+        file_branch_coverage_min=fallback(
+            args.file_branch_coverage_min, config.file_branch_coverage_min
         ),
-        file_branch_coverage_min=(
-            args.file_branch_coverage_min
-            if args.file_branch_coverage_min is not None
-            else config.file_branch_coverage_min
-        ),
-        file_combined_coverage_min=(
-            args.file_combined_coverage_min
-            if args.file_combined_coverage_min is not None
-            else config.file_combined_coverage_min
+        file_combined_coverage_min=fallback(
+            args.file_combined_coverage_min, config.file_combined_coverage_min
         ),
         modules=config.modules,
     )
