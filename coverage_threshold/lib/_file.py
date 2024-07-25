@@ -1,3 +1,4 @@
+import os
 from decimal import Decimal
 from itertools import chain
 from typing import Callable, Optional, Union
@@ -24,7 +25,7 @@ def best_matching_module_config_for_file(
     matches = [
         (prefix, module)
         for prefix, module in config.modules.items()
-        if filename.startswith(prefix)
+        if os.path.commonprefix((filename, prefix))
     ]
     if len(matches) > 0:
         return max(matches, key=lambda match: len(match[0]))[1]
