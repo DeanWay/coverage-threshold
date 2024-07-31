@@ -1,10 +1,11 @@
-import os
+import posixpath
 from decimal import Decimal
 from itertools import chain
 from typing import Callable, Optional, Union
 
 from coverage_threshold.model.config import Config, ModuleConfig
 from coverage_threshold.model.report import FileCoverageModel, ReportModel
+from coverage_threshold.model.util import normalize_path
 
 from ._common import (
     check_branch_coverage_min,
@@ -25,7 +26,7 @@ def best_matching_module_config_for_file(
     matches = [
         (prefix, module)
         for prefix, module in config.modules.items()
-        if os.path.commonprefix((filename, prefix))
+        if posixpath.commonprefix((normalize_path(filename), prefix))
     ]
     if len(matches) > 0:
         return max(matches, key=lambda match: len(match[0]))[1]
