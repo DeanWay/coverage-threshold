@@ -19,8 +19,7 @@ if TYPE_CHECKING:
             summary: CoverageSummaryModel,
             threshold: Optional[T],
             failure_message_prefix: str,
-        ) -> CheckResult:
-            ...
+        ) -> CheckResult: ...
 
 
 def _safe_percent(numerator: int, denomenator: int) -> Decimal:

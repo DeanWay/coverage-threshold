@@ -38,9 +38,11 @@ class Config:
             file_combined_coverage_min=parse_option_field(
                 obj, Decimal, "file_combined_coverage_min"
             ),
-            modules={k: ModuleConfig.parse(v) for k, v in obj["modules"].items()}
-            if "modules" in obj
-            else None,
+            modules=(
+                {k: ModuleConfig.parse(v) for k, v in obj["modules"].items()}
+                if "modules" in obj
+                else None
+            ),
         )
 
 
