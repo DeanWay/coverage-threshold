@@ -41,15 +41,10 @@ def test_check_totals() -> None:
         )
         == Pass()
     )
-    assert (
-        check_all(
-            create_report(
-                totals=CoverageSummaryModel(covered_lines=2, num_statements=3)
-            ),
-            Config(line_coverage_min=Decimal("67.0")),
-        )
-        == Fail(["Total line coverage metric failed, expected 67.0, was 66.6667"])
-    )
+    assert check_all(
+        create_report(totals=CoverageSummaryModel(covered_lines=2, num_statements=3)),
+        Config(line_coverage_min=Decimal("67.0")),
+    ) == Fail(["Total line coverage metric failed, expected 67.0, was 66.6667"])
 
 
 def test_check_totals__with_number_missing_lines_max() -> None:
@@ -125,13 +120,10 @@ def test_check_totals_with_branch_coverage() -> None:
         )
         == Pass()
     )
-    assert (
-        check_all(
-            report,
-            Config(branch_coverage_min=Decimal("75.001")),
-        )
-        == Fail(["Total branch coverage metric failed, expected 75.001, was 75.0000"])
-    )
+    assert check_all(
+        report,
+        Config(branch_coverage_min=Decimal("75.001")),
+    ) == Fail(["Total branch coverage metric failed, expected 75.001, was 75.0000"])
 
 
 def test_check_totals_with_combined_coverage() -> None:
@@ -151,13 +143,10 @@ def test_check_totals_with_combined_coverage() -> None:
         )
         == Pass()
     )
-    assert (
-        check_all(
-            report,
-            Config(combined_coverage_min=Decimal("80.001")),
-        )
-        == Fail(["Total combined coverage metric failed, expected 80.001, was 80.0000"])
-    )
+    assert check_all(
+        report,
+        Config(combined_coverage_min=Decimal("80.001")),
+    ) == Fail(["Total combined coverage metric failed, expected 80.001, was 80.0000"])
 
 
 def test_check_all_files_with_branch_coverage() -> None:
