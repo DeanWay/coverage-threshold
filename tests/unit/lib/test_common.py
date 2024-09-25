@@ -13,9 +13,7 @@ def test_safe_percent__100_percent_when_denomenator_is_zero(numerator: int) -> N
     assert _safe_percent(numerator, 0) == Decimal(100)
 
 
-@given(
-    integers(min_value=0, max_value=10 ** 10), integers(min_value=1, max_value=10 ** 10)
-)
+@given(integers(min_value=0, max_value=10**10), integers(min_value=1, max_value=10**10))
 def test_safe_percent__regular_fraction_otherwise(
     numerator: int, denomenator: int
 ) -> None:

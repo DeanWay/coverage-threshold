@@ -15,6 +15,7 @@ black = "*"
 typing_extensions = "*"
 hypothesis = "*"
 flake8 = "*"
+types-toml = "*"
 
 [packages]
 toml = ">= 0.10.2"
