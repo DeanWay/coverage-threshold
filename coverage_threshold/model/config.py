@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import Any, Mapping, Optional
 
-from .util import parse_option_field
+from .util import normalize_path, parse_option_field
 
 
 @dataclass(frozen=True)
@@ -39,7 +39,10 @@ class Config:
                 obj, Decimal, "file_combined_coverage_min"
             ),
             modules=(
-                {k: ModuleConfig.parse(v) for k, v in obj["modules"].items()}
+                {
+                    normalize_path(k): ModuleConfig.parse(v)
+                    for k, v in obj["modules"].items()
+                }
                 if "modules" in obj
                 else None
             ),

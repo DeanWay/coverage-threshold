@@ -1,3 +1,5 @@
+import os
+import posixpath
 from typing import Any, Optional, Type, TypeVar
 
 T = TypeVar("T", bound=Any)
@@ -11,3 +13,7 @@ def parse_option_field(
         if field_name in obj and obj[field_name] is not None
         else None
     )
+
+
+def normalize_path(path: str) -> str:
+    return path.replace(os.sep, posixpath.sep)
