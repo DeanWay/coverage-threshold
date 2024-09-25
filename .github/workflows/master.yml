@@ -1,0 +1,8 @@
+name: master build
+
+on:
+  branch: master
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
