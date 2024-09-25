@@ -39,7 +39,10 @@ class Config:
                 obj, Decimal, "file_combined_coverage_min"
             ),
             modules=(
-                {normalize_path(k): ModuleConfig.parse(v) for k, v in obj["modules"].items()}
+                {
+                    normalize_path(k): ModuleConfig.parse(v)
+                    for k, v in obj["modules"].items()
+                }
                 if "modules" in obj
                 else None
             ),

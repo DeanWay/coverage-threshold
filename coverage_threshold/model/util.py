@@ -1,5 +1,5 @@
-import posixpath
 import os
+import posixpath
 from typing import Any, Optional, Type, TypeVar
 
 T = TypeVar("T", bound=Any)
