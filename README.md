@@ -3,8 +3,8 @@
 A command line tool for checking coverage reports against configurable coverage minimums.
 Currently built for use around python's [coverage](https://pypi.org/project/coverage/)
 
-
 ### Installation
+
 `pip install coverage-threshold`
 
 also recommended:
@@ -12,7 +12,9 @@ also recommended:
 `pip install coverage`
 
 ### Usage
+
 Typical execution:
+
 ```bash
 coverage run -m pytest tests/  # or any test runner here
 coverage json
@@ -52,34 +54,34 @@ optional arguments:
   --config CONFIG       path to config file (default: ./pyproject.toml)
 ```
 
-
 ### Config
 
 the current expected config file format is [toml](https://toml.io/en/)
 the default config file used is `pyproject.toml` but and alternative path can be specified with `--config`
 
 example config:
+
 ```toml
-[coverage-threshold]
+[tool.coverage-threshold]
 line_coverage_min = 95
 file_line_coverage_min = 95
 branch_coverage_min = 50
 
-    [coverage-threshold.modules."src/cli/"]
-    file_line_coverage_min = 40
+[tool.coverage-threshold.modules."src/cli/"]
+file_line_coverage_min = 40
 
-    [coverage-threshold.modules."src/cli/my_command.py"]
-    file_line_coverage_min = 100
+[tool.coverage-threshold.modules."src/cli/my_command.py"]
+file_line_coverage_min = 100
 
-    [coverage-threshold.modules."src/lib/"]
-    file_line_coverage_min = 100
-    file_branch_coverage_min = 100
+[tool.coverage-threshold.modules."src/lib/"]
+file_line_coverage_min = 100
+file_branch_coverage_min = 100
 
-    [coverage-threshold.modules."src/model/"]
-    file_line_coverage_min = 100
+[tool.coverage-threshold.modules."src/model/"]
+file_line_coverage_min = 100
 
-    [coverage-threshold.modules."src/__main__.py"]
-    file_line_coverage_min = 0
+[tool.coverage-threshold.modules."src/__main__.py"]
+file_line_coverage_min = 0
 ```
 
 Each string key in `config.modules` is treated as a path prefix, where the longest matching prefix is used to configure the coverage thresholds for each file
