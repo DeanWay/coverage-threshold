@@ -1,10 +1,38 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "coverage_threshold"
+version = "0.6.0"
+authors = [{ name = "Dean Way", email = "deanwaydev@gmail.com" }]
+description = "Tools for coverage threshold limits"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+dependencies = ["toml >= 0.10.2"]
+
+[project.scripts]
+coverage-threshold = "coverage_threshold.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/DeanWay/coverage-threshold"
+Issues = "https://github.com/DeanWay/coverage-threshold/issues"
 
 [tool.isort]
 profile = "black"
 src_paths = ["coverage_threshold", "tests"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
 
 [tool.coverage-threshold]
 line_coverage_min = 0
