@@ -14,15 +14,13 @@ def read_config(config_file_name: Optional[str]) -> Config:
     else:
         config_file_name = DEFAULT_FILENAME
     if os.path.isfile(config_file_name):
+        toml_dict = toml.load(config_file_name)
         try:
             # PEP 518 compliant version
-            return Config.parse(
-                toml.load(config_file_name)["tool"]["coverage-threshold"]
-            )
+            config_dict = toml_dict["tool"]["coverage-threshold"]
         except KeyError:
             # Legacy version
-            return Config.parse(
-                toml.load(config_file_name).get("coverage-threshold", {})
-            )
+            config_dict = toml_dict.get("coverage-threshold", {})
+        return Config.parse(config_dict)
     else:
         return Config()
