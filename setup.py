@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="coverage_threshold",
-    version="0.5.0",
+    version="0.6.0",
     author="Dean Way",
     description="Tools for coverage threshold limits",
     long_description=long_description,
