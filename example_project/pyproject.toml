@@ -1,2 +1,2 @@
-[coverage-threshold]
+[tool.coverage-threshold]
 line_coverage_min = 75.0
