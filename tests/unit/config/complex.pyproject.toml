@@ -1,0 +1,20 @@
+[tool.coverage-threshold]
+line_coverage_min = 95
+file_line_coverage_min = 95
+branch_coverage_min = 50
+
+[tool.coverage-threshold.modules."src/cli/"]
+file_line_coverage_min = 40
+
+[tool.coverage-threshold.modules."src/cli/my_command.py"]
+file_line_coverage_min = 100
+
+[tool.coverage-threshold.modules."src/lib/"]
+file_line_coverage_min = 100
+file_branch_coverage_min = 100
+
+[tool.coverage-threshold.modules."src/model/"]
+file_line_coverage_min = 100
+
+[tool.coverage-threshold.modules."src/__main__.py"]
+file_line_coverage_min = 0
