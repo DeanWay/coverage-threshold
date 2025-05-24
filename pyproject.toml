@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "coverage_threshold"
-version = "0.6.0"
+version = "0.6.1"
 authors = [{ name = "Dean Way", email = "deanwaydev@gmail.com" }]
 description = "Tools for coverage threshold limits"
 readme = "README.md"
