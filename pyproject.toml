@@ -39,10 +39,10 @@ line_coverage_min = 0
 file_line_coverage_min = 100
 file_branch_coverage_min = 100
 
-[tool.coverage-threshold.modules."coverage_threshold/cli/"]
+[tool.coverage-threshold.modules."src/coverage_threshold/cli/"]
 file_line_coverage_min = 0
 file_branch_coverage_min = 0
 
-[tool.coverage-threshold.modules."coverage_threshold/__main__.py"]
+[tool.coverage-threshold.modules."src/coverage_threshold/__main__.py"]
 file_line_coverage_min = 0
 file_branch_coverage_min = 0

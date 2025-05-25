@@ -1,6 +1,6 @@
 [run]
 source =
-    coverage_threshold/
+    src/coverage_threshold/
 
 [report]
 exclude_lines =
