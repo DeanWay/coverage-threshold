@@ -22,11 +22,11 @@ if TYPE_CHECKING:
         ) -> CheckResult: ...
 
 
-def _safe_percent(numerator: int, denomenator: int) -> Decimal:
-    if denomenator == 0:
+def _safe_percent(numerator: int, denominator: int, /) -> Decimal:
+    if denominator == 0:
         return Decimal(100)
     else:
-        return ((Decimal(numerator) / Decimal(denomenator)) * Decimal(100)).quantize(
+        return ((Decimal(numerator) / Decimal(denominator)) * Decimal(100)).quantize(
             Decimal("0.0001")
         )
 
