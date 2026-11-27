@@ -15,10 +15,10 @@ def test_safe_percent__100_percent_when_denomenator_is_zero(numerator: int) -> N
 
 @given(integers(min_value=0, max_value=10**10), integers(min_value=1, max_value=10**10))
 def test_safe_percent__regular_fraction_otherwise(
-    numerator: int, denomenator: int
+    numerator: int, denominator: int
 ) -> None:
-    assert _safe_percent(numerator, denomenator) == (
-        Decimal(numerator) / Decimal(denomenator) * Decimal(100)
+    assert _safe_percent(numerator, denominator) == (
+        Decimal(numerator) / Decimal(denominator) * Decimal(100)
     ).quantize(Decimal("0.0001"))
 
 

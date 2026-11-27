@@ -2,6 +2,7 @@
 line_coverage_min = 95
 file_line_coverage_min = 95
 branch_coverage_min = 50
+coverage_json = "path/to/coverage.json"
 
 [tool.coverage-threshold.modules."src/cli/"]
 file_line_coverage_min = 40

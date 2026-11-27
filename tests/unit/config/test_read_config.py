@@ -22,6 +22,7 @@ def test_read_config_parses_complex_pyproject_format() -> None:
     assert config.line_coverage_min == Decimal("95.0")
     assert config.file_line_coverage_min == Decimal("95.0")
     assert config.branch_coverage_min == Decimal("50.0")
+    assert config.coverage_json == "path/to/coverage.json"
     assert config.modules is not None
     assert config.modules["src/cli/"].file_line_coverage_min == Decimal("40.0")
     assert config.modules["src/cli/my_command.py"].file_line_coverage_min == Decimal(
