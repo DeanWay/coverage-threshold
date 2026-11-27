@@ -11,9 +11,9 @@ def bool_to_return_status(x: bool) -> int:
 
 def main() -> int:
     args = parser.parse_args(namespace=ArgsNamespace())
-    report = read_report(args.coverage_json)
     config_from_file = read_config(args.config)
     config = combine_config_with_args(args, config_from_file)
+    report = read_report(config.coverage_json)
     all_checks = check_all(report, config)
     if all_checks.result:
         print(colors.OKGREEN + "Success!" + colors.ENDC)

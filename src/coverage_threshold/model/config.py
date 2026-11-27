@@ -17,6 +17,7 @@ class Config:
     file_branch_coverage_min: Optional[Decimal] = None
     file_combined_coverage_min: Optional[Decimal] = None
     modules: Optional[Mapping[str, ModuleConfig]] = None
+    coverage_json: Optional[str] = None
 
     @staticmethod
     def parse(obj: Any) -> Config:
@@ -46,6 +47,7 @@ class Config:
                 if "modules" in obj
                 else None
             ),
+            coverage_json=parse_option_field(obj, str, "coverage_json"),
         )
 
 

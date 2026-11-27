@@ -56,7 +56,7 @@ parser.add_argument(
 parser.add_argument(
     "--coverage-json",
     type=str,
-    default="./coverage.json",
+    default=None,
     help="path to coverage json (default: ./coverage.json)",
 )
 parser.add_argument(
@@ -75,7 +75,7 @@ class ArgsNamespace(argparse.Namespace):
     file_line_coverage_min: Optional[Decimal]
     file_branch_coverage_min: Optional[Decimal]
     file_combined_coverage_min: Optional[Decimal]
-    coverage_json: str
+    coverage_json: Optional[str]
     config: str
 
 
@@ -101,4 +101,5 @@ def combine_config_with_args(args: ArgsNamespace, config: Config) -> Config:
             args.file_combined_coverage_min, config.file_combined_coverage_min
         ),
         modules=config.modules,
+        coverage_json=fallback(args.coverage_json, config.coverage_json),
     )
